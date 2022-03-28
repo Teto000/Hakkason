@@ -8,6 +8,7 @@
 //------------------------
 // インクルード
 //------------------------
+#include "title.h"
 #include "tutorial.h"
 #include "input.h"
 #include "fade.h"
@@ -15,10 +16,17 @@
 #include "texture.h"
 
 //------------------------
+// マクロ定義
+//------------------------
+
+//------------------------
 // スタティック変数
 //------------------------
 static TEXTURE	s_pTexture;		//テクスチャへのポインタ
 static LPDIRECT3DVERTEXBUFFER9	s_pVtxBuff = NULL;	//頂点バッファへのポインタ;
+
+//構造体
+static Title s_Title;	//タイトル構造体
 
 //========================
 // タイトルの初期化処理
@@ -40,8 +48,13 @@ void InitTitle(void)
 								&s_pVtxBuff,
 								NULL);
 
-	//タイトルの位置の設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
+	//------------------------
+	// タイトル構造体の初期化
+	//------------------------
+	s_Title.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	s_Title.fWidth = 0.0f;
+	s_Title.fHeight = 0.0f;
+	s_Title.bUse = false;
 
 	VERTEX_2D*pVtx;		//頂点情報へのポインタ
 
@@ -52,10 +65,10 @@ void InitTitle(void)
 	// 頂点情報の設定
 	//------------------------
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(pos.x - SCREEN_WIDTH / 2, pos.y - SCREEN_HEIGHT / 2, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(pos.x + SCREEN_WIDTH / 2, pos.y - SCREEN_HEIGHT / 2, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(pos.x - SCREEN_WIDTH / 2, pos.y + SCREEN_HEIGHT / 2, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(pos.x + SCREEN_WIDTH / 2, pos.y + SCREEN_HEIGHT / 2, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//rhwの設定
 	pVtx[0].rhw = 1.0f;
@@ -103,20 +116,11 @@ void UninitTitle(void)
 //========================
 void UpdateTitle(void)
 {
-	VERTEX_2D*pVtx;		//頂点情報へのポインタ
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	s_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
 	//画面遷移
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
 	{
-
 		SetFade(MODE_GAME);
 	}
-
-	//頂点バッファをアンロックする
-	s_pVtxBuff->Unlock();
 }
 
 //========================
@@ -139,4 +143,34 @@ void DrawTitle(void)
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,		//プリミティブの種類
 						   0,						//描画する最初の頂点インデックス
 						   2);						//描画するプリミティブ数
+}
+
+//========================
+// タイトル背景の設定
+//========================
+void SetTitleBG(void)
+{
+	VERTEX_2D*pVtx;		//頂点情報へのポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	s_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	if (s_Title.bUse == false)
+	{//使用していないなら
+		//構造体の設定
+		s_Title.pos = D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
+		s_Title.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		s_Title.fWidth = SCREEN_WIDTH / 2;
+		s_Title.fHeight = SCREEN_HEIGHT / 2;
+		s_Title.bUse = true;
+
+		//頂点座標の設定
+		pVtx[0].pos = s_Title.pos + D3DXVECTOR3(-s_Title.fWidth, -s_Title.fHeight, 0.0f);
+		pVtx[1].pos = s_Title.pos + D3DXVECTOR3(s_Title.fWidth, -s_Title.fHeight, 0.0f);
+		pVtx[2].pos = s_Title.pos + D3DXVECTOR3(-s_Title.fWidth, s_Title.fHeight, 0.0f);
+		pVtx[3].pos = s_Title.pos + D3DXVECTOR3(s_Title.fWidth, s_Title.fHeight, 0.0f);
+	}
+
+	//頂点バッファをアンロックする
+	s_pVtxBuff->Unlock();
 }

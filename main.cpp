@@ -388,9 +388,11 @@ void SetMode(MODE mode)
 		UninitTitle();
 		break;
 	case MODE_GAME:
+		//ゲームの終了処理
 		UninitGame();
 		break;
 	case MODE_RESULT:
+		//リザルトの終了処理
 		UninitResult();
 		break;
 	}
@@ -399,12 +401,17 @@ void SetMode(MODE mode)
 	switch (mode)
 	{
 	case MODE_TITLE:
+		//タイトルの初期化処理
 		InitTitle();
+		//タイトルの設定処理
+		SetTitleBG();
 		break;
 	case MODE_GAME:
+		//ゲームの初期化処理
 		InitGame();
 		break;
 	case MODE_RESULT:
+		//リザルトの初期化処理
 		InitResult();
 		break;
 	}

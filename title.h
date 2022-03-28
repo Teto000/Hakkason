@@ -9,10 +9,21 @@
 
 #include "main.h" 
 
+//タイトル構造体の定義
+typedef struct
+{
+	D3DXVECTOR3 pos;	//位置
+	D3DXCOLOR col;		//色
+	float fWidth;		//幅
+	float fHeight;		//高さ
+	bool bUse;
+}Title;
+
 //プロトタイプ宣言
 void InitTitle(void);
 void UninitTitle(void);
 void UpdateTitle(void);
 void DrawTitle(void);
+void SetTitleBG(void);
 
 #endif
