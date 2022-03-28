@@ -43,6 +43,8 @@ LPDIRECT3DDEVICE9	GetDevice(void);
 void SetMode(MODE mode);
 MODE GetMode(void);
 
+
+
 //頂点情報構造体を定義
 typedef struct
 {
@@ -60,4 +62,7 @@ typedef struct
 	D3DXVECTOR2 tex;	//テクスチャへのポインタ
 }VERTEX_3D;
 
+
+void SetNormalpos(VERTEX_2D *pVtx, float XUP, float XDW, float YUP, float YDW);
+void Settex(VERTEX_2D *pVtx, float left, float right, float top, float down);
 #endif

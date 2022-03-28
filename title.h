@@ -1,29 +1,32 @@
-//================================
+//============================
 //
 // タイトル画面のヘッダー
-// Author:Teruto Sato
+// Author:hamada ryuuga
 //
-//================================
-#ifndef _TITLE_H_		//このマクロが定義されてなかったら
-#define _TITLE_H_		//2重インクルード防止のマクロ定義
+//============================
+#pragma once
+#ifndef _TITLE_H_
+#define _TITLE_H_
 
-#include "main.h" 
+#include"main.h"
 
-//タイトル構造体の定義
+#define	MAX_TITLE	(8)
+
 typedef struct
 {
-	D3DXVECTOR3 pos;	//位置
 	D3DXCOLOR col;		//色
-	float fWidth;		//幅
-	float fHeight;		//高さ
-	bool bUse;
-}Title;
+	D3DXCOLOR colSet;	//消すほうの色
+	bool nSwitch;		//スイッチ
+	int nSelect;		//せレクト
+	int degree;			//難易度
+}TITLE;
 
 //プロトタイプ宣言
 void InitTitle(void);
 void UninitTitle(void);
 void UpdateTitle(void);
 void DrawTitle(void);
-void SetTitleBG(void);
+int Getdegree(void);
+
 
 #endif
