@@ -197,7 +197,6 @@ void SetEffect(D3DXVECTOR3 pos,  D3DXCOLOR col, EFFECTSTATE nType, int life, flo
 			s_aEffect[nCntEffect].pos.y = pos.y;
 			s_aEffect[nCntEffect].pos.z = pos.z;
 
-	
 
 			//頂点バッファをアンロック
 			g_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
