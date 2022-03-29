@@ -150,12 +150,14 @@
   <ItemGroup>
     <ClCompile Include="ball.cpp" />
     <ClCompile Include="bg.cpp" />
+    <ClCompile Include="effect.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Life.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ranking.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="slingshot.cpp" />
@@ -167,12 +169,14 @@
   <ItemGroup>
     <ClInclude Include="ball.h" />
     <ClInclude Include="bg.h" />
+    <ClInclude Include="effect.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Life.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="ranking.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="slingshot.h" />

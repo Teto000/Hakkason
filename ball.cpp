@@ -7,8 +7,10 @@
 
 #include "ball.h"
 #include "input.h"
-#include"game.h"
-
+#include "game.h"
+#include "enemy.h"
+#include "score.h"
+#include "effect.h"
 
 #define	NUR_BALL	(1)
 
@@ -148,19 +150,19 @@ void UpdateBall(void)
 
 		if (g_aBall[nCntBall].bUse == true)
 		{
-			//SetEffect(g_aBall[nCntBall].pos, D3DXCOLOR(coleff2, coleff2, coleff2, 1.0f), 20, 10);
-
+			
 		
 			if (GetMousePress(MOUSE_INPUT_LEFT)&& !g_aBall[nCntBall].moveset)
 			{
 				D3DXVECTOR3 length = GetMouse();
+				g_aBall[nCntBall].pos = length;
 				//頂点座標
 				pVtx[0].pos = D3DXVECTOR3(length.x - g_aBall[nCntBall].fSiz, length.y - g_aBall[nCntBall].fSiz, 0.0f);
 				pVtx[1].pos = D3DXVECTOR3(length.x + g_aBall[nCntBall].fSiz, length.y - g_aBall[nCntBall].fSiz, 0.0f);
 				pVtx[2].pos = D3DXVECTOR3(length.x - g_aBall[nCntBall].fSiz, length.y + g_aBall[nCntBall].fSiz, 0.0f);
 				pVtx[3].pos = D3DXVECTOR3(length.x + g_aBall[nCntBall].fSiz, length.y + g_aBall[nCntBall].fSiz, 0.0f);
 			}
-			else
+			if (g_aBall[nCntBall].moveOn)
 			{
 				g_aBall[nCntBall].nLife--;
 				//位置更新
@@ -172,6 +174,27 @@ void UpdateBall(void)
 				pVtx[2].pos = D3DXVECTOR3(g_aBall[nCntBall].pos.x - g_aBall[nCntBall].fSiz, g_aBall[nCntBall].pos.y + g_aBall[nCntBall].fSiz, 0.0f);
 				pVtx[3].pos = D3DXVECTOR3(g_aBall[nCntBall].pos.x + g_aBall[nCntBall].fSiz, g_aBall[nCntBall].pos.y + g_aBall[nCntBall].fSiz, 0.0f);
 
+				for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
+				{
+					Enemy *pEnemy = GetEnemy(nCntEnemy);
+					if (!pEnemy->bUse)
+					{
+						continue;
+					}
+					if (g_aBall[nCntBall].pos.x + g_aBall[nCntBall].fSiz >= pEnemy->pos.x- WIDTH
+						&& g_aBall[nCntBall].pos.x - g_aBall[nCntBall].fSiz <= pEnemy->pos.x+ WIDTH
+						&& g_aBall[nCntBall].pos.y + g_aBall[nCntBall].fSiz >= pEnemy->pos.y- HEIGHT
+						&& g_aBall[nCntBall].pos.y - g_aBall[nCntBall].fSiz <= pEnemy->pos.y+ HEIGHT)
+					{//弾座標重なり
+				
+							g_aBall[nCntBall].kill++;
+							AddScore(10 * g_aBall[nCntBall].kill);
+							pEnemy->bUse = false;
+							// エフェクトの設定
+							SetEffect(pEnemy->pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), EFFECTSTATE_GOAL_POINT5, 50, 50.0f, false);
+					}
+
+				}
 			}
 			if (g_aBall[nCntBall].nLife == 0)
 			{
@@ -180,8 +203,8 @@ void UpdateBall(void)
 
 			}
 
-			pVtx += 4;//頂点ポイントを四つ進む
 		}
+			pVtx += 4;//頂点ポイントを四つ進む
 	}
 	//頂点バッファをアンロック
 	g_pVtxBuffBall->Unlock();
@@ -221,7 +244,7 @@ void DrawBall(void)
 //==================
 //弾の設定
 //==================
-void SetBall(D3DXVECTOR3 pos, int nLife, int nType, float fSiz)
+int SetBall(D3DXVECTOR3 pos, int nLife, int nType, float fSiz)
 {
 	int nCntBall;
 	VERTEX_2D*pVtx; //頂点へのポインタ
@@ -229,7 +252,7 @@ void SetBall(D3DXVECTOR3 pos, int nLife, int nType, float fSiz)
 					//ロック
 	g_pVtxBuffBall->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (nCntBall = 0; nCntBall <MAX_BALL; nCntBall++)
+	for (nCntBall = 0; nCntBall < MAX_BALL; nCntBall++)
 	{
 		if (g_aBall[nCntBall].bUse == false)
 		{
@@ -237,7 +260,7 @@ void SetBall(D3DXVECTOR3 pos, int nLife, int nType, float fSiz)
 			g_aBall[nCntBall].pos.x = pos.x;
 			g_aBall[nCntBall].pos.y = pos.y;
 			g_aBall[nCntBall].pos.z = pos.z;
-
+			g_aBall[nCntBall].kill = 0;
 			g_aBall[nCntBall].fSiz = fSiz;
 			//頂点座標
 			pVtx[0].pos = D3DXVECTOR3(g_aBall[nCntBall].pos.x - fSiz, g_aBall[nCntBall].pos.y - fSiz, 0.0f);
@@ -253,24 +276,15 @@ void SetBall(D3DXVECTOR3 pos, int nLife, int nType, float fSiz)
 		}
 		pVtx += 4;
 	}
+
 	//頂点バッファをアンロック
 	g_pVtxBuffBall->Unlock();
+
+	return nCntBall;
 }
 
-void MoveBall(D3DXVECTOR3 move)
-{
-	int nCntBall;
-
-
-	for (nCntBall = 0; nCntBall <MAX_BALL; nCntBall++)
-	{
-		if (g_aBall[nCntBall].moveset&&!g_aBall[nCntBall].moveOn)
-		{
-			g_aBall[nCntBall].move = move;
-			g_aBall[nCntBall].moveOn = true;
-			break;
-		}
-
-	}
-
+void MoveBall(D3DXVECTOR3 move, int number)
+{		
+	g_aBall[number].move = move;
+	g_aBall[number].moveOn = true;
 }

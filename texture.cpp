@@ -35,6 +35,13 @@ const char *s_FileName[] =
 
 	//リザルト画面
 	"data\\TEXTURE\\RESULT\\Result_BG.png",		//リザルトの背景
+
+    /*↓ エフェクト ↓*/
+    "data/TEXTURE/EFFECT/fire.png",				// 炎のエフェクト
+    "data/TEXTURE/EFFECT/spin.png",				// ディスクのエフェクト
+    "data/TEXTURE/EFFECT/tackle.png",			// タックルのエフェクト
+    "data/TEXTURE/EFFECT/Goal.png",				// ゴールのエフェクト
+    "data/TEXTURE/EFFECT/spark.png",			// 壁の火花
 };
 }// namespaceはここまで
 

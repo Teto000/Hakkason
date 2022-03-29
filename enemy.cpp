@@ -19,14 +19,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-//------------------------
-// マクロ定義
-//------------------------
-#define	MAX_ENEMY	(256)	//敵の最大数
-#define FALL_SPEED	(2.0f)	//落下速度
-#define WIDTH	(60.0f)		//幅
-#define HEIGHT	(100.0f)	//高さ
-#define MAX_VECTOR	(4)		//ベクトルの最大数
 
 //------------------------
 // スタティック変数
@@ -308,8 +300,8 @@ void SetEnemy(void)
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
-			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
-			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);	//向き
+			enemy->move = D3DXVECTOR3(3.0f, 0.0f, 0.0f);	//移動量
+			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
 			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定

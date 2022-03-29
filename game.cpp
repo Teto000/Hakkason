@@ -19,6 +19,7 @@
 #include "slingshot.h"
 #include "ball.h"
 #include"Time.h"
+#include "effect.h"
 //------------------------------
 // マクロ定義
 //------------------------------
@@ -59,6 +60,7 @@ void InitGame(void)
 	//ぱちんこの初期化
 	InitSlingshot();
 
+	InitEffect();
 	//サウンドの再生
 	//PlaySound(SOUND_LABEL_BGM000);
 }
@@ -85,6 +87,7 @@ void UninitGame(void)
 
 	//ぱちんこの終了
 	UninitSlingshot();
+	UninitEffect();
 }
 
 //========================
@@ -100,6 +103,8 @@ void UpdateGame(void)
 
 	//敵の更新処理
 	UpdateEnemy();
+
+	UpdateEffect();
 
 	if (s_nPopTime == HALF_POP_TIME)
 	{
@@ -130,6 +135,13 @@ void UpdateGame(void)
 
 		SetFade(MODE_RESULT);
 	}
+
+	if (GetKeyboardTrigger(DIK_SPACE) == true || GetJoypadTrigger(JOYKEY_A))
+	{
+
+		SetFade(MODE_RANKING);
+	}
+
 }
 
 //========================
@@ -139,7 +151,7 @@ void DrawGame(void)
 {
 	//背景の描画処理
 	DrawBG();
-
+	DrawEffect();
 	//敵の描画処理
 	DrawEnemy();
 

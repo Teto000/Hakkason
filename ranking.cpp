@@ -19,7 +19,6 @@ typedef struct
 }RankScore;
 
 //グローバル変数
-
 static LPDIRECT3DTEXTURE9 s_pTextureRank = NULL;			//テクスチャへのポインタ
 static LPDIRECT3DTEXTURE9 s_pTextureRankScore = NULL;		//テクスチャへのポインタ
 static LPDIRECT3DTEXTURE9 s_pTextureRankBG = NULL;		    //テクスチャへのポインタ
@@ -54,17 +53,17 @@ void InitRanking(void)
 
 	//テクスチャの読込
 	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/ranking_rank1.png",
+		"data/TEXTURE/RESULT/ranking_rank1.png",
 		&s_pTextureRank);
 
 	//テクスチャの読込
 	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/Score001.png",
+		"data/TEXTURE/RESULT/score.png",
 		&s_pTextureRankScore);
 
 	//テクスチャの読込
 	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/yoru2.png",
+		"data/TEXTURE/RESULT/yoru2.png",
 		&s_pTextureRankBG);
 
 	//ランキングの情報の初期化
@@ -83,7 +82,7 @@ void InitRanking(void)
 		NULL);
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_RANK * MAX_SCORE,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_RANK * NUM_SCORE,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -160,7 +159,7 @@ void InitRanking(void)
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{
 		s_aRankScore[nCntRank].pos.x += 100;	//スコア表示場所へ移動
-		for (nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
+		for (nCntScore = 0; nCntScore < NUM_SCORE; nCntScore++)
 		{
 			pVtx[0].pos.x = s_aRankScore[nCntRank].pos.x - 30.0f + nCntScore * 50;
 			pVtx[0].pos.y = s_aRankScore[nCntRank].pos.y - 30.0f + nCntRank * 100;
@@ -353,7 +352,7 @@ void UpdateRanking(void)
 	{
 		if (s_aRankScore[nCntRank].hikari)
 		{
-			for (nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
+			for (nCntScore = 0; nCntScore < NUM_SCORE; nCntScore++)
 			{
 				//頂点カラーの設定
 				pVtx[0].col = D3DXCOLOR(nTimecol);
@@ -366,7 +365,7 @@ void UpdateRanking(void)
 		}
 		else
 		{
-			for (nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
+			for (nCntScore = 0; nCntScore < NUM_SCORE; nCntScore++)
 			{
 				//頂点カラーの設定
 				pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -462,13 +461,13 @@ void DrawRanking(void)
 
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{//順位
-		for (nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
+		for (nCntScore = 0; nCntScore < NUM_SCORE; nCntScore++)
 		{//スコア
 		 //テクスチャの設定
 			pDevice->SetTexture(0, s_pTextureRankScore);
 
 			//ポリゴン描画
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, (nCntRank * 4 * MAX_SCORE) + (nCntScore * 4), 2);
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, (nCntRank * 4 * NUM_SCORE) + (nCntScore * 4), 2);
 		}
 	}
 
@@ -583,26 +582,22 @@ void SetRanking(int nScore)
 
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{
-		int aPosTexU[8];
+		int aPosTexU[6];
 
+		aPosTexU[0] = s_aRankScore[nCntRank].nScore % 1000000 / 100000;
+		aPosTexU[1] = s_aRankScore[nCntRank].nScore % 100000 / 10000;
+		aPosTexU[2] = s_aRankScore[nCntRank].nScore % 10000 / 1000;
+		aPosTexU[3] = s_aRankScore[nCntRank].nScore % 1000 / 100;
+		aPosTexU[4] = s_aRankScore[nCntRank].nScore % 100 / 10;
+		aPosTexU[5] = s_aRankScore[nCntRank].nScore % 10 / 1;
 
-		aPosTexU[0] = s_aRankScore[nCntRank].nScore % 100000000 / 10000000;
-		aPosTexU[1] = s_aRankScore[nCntRank].nScore % 10000000 / 1000000;
-		aPosTexU[2] = s_aRankScore[nCntRank].nScore % 1000000 / 100000;
-		aPosTexU[3] = s_aRankScore[nCntRank].nScore % 100000 / 10000;
-		aPosTexU[4] = s_aRankScore[nCntRank].nScore % 10000 / 1000;
-		aPosTexU[5] = s_aRankScore[nCntRank].nScore % 1000 / 100;
-		aPosTexU[6] = s_aRankScore[nCntRank].nScore % 100 / 10;
-		aPosTexU[7] = s_aRankScore[nCntRank].nScore % 10 / 1;
-
-		for (nCnt2Rank = 0; nCnt2Rank < MAX_SCORE; nCnt2Rank++)
+		for (nCnt2Rank = 0; nCnt2Rank < NUM_SCORE; nCnt2Rank++)
 		{
 			//テクスチャ座標の設定
 			pVtx[0].tex = D3DXVECTOR2(0.0f + 0.1f * aPosTexU[nCnt2Rank], 0.0f);
 			pVtx[1].tex = D3DXVECTOR2(0.1f + 0.1f * aPosTexU[nCnt2Rank], 0.0f);
 			pVtx[2].tex = D3DXVECTOR2(0.0f + 0.1f * aPosTexU[nCnt2Rank], 1.0f);
 			pVtx[3].tex = D3DXVECTOR2(0.1f + 0.1f * aPosTexU[nCnt2Rank], 1.0f);
-
 
 			//頂点カラーの設定
 			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);

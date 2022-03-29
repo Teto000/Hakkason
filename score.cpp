@@ -1,10 +1,5 @@
 #include"score.h"
 
-//マクロ定義
-#define NUM_SCORE (6)		//桁数
-#define SCORE_SIZE 20
-
-
 //グローバル変数
 static LPDIRECT3DTEXTURE9 g_pTexture = NULL;					//テクスチャへのポインタ
 static LPDIRECT3DVERTEXBUFFER9 g_pVtxBuff = NULL;				//頂点バッファへのポインタ

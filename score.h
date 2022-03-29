@@ -3,6 +3,9 @@
 
 #include "main.h"
 
+//マクロ定義
+#define NUM_SCORE (6)		//桁数
+#define SCORE_SIZE 20
 #define RESULT_SCORE	(45.0f)		//リザルトでのスコアの大きさ
 #define RESULT_SCOREX	(80.0f)		//リザルトでX軸どれくらいずらすか
 

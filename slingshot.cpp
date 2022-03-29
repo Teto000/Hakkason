@@ -22,13 +22,14 @@ static D3DXVECTOR3 clickpoint;
 static D3DXVECTOR3 move;
 static D3DXVECTOR3 length;
 static bool press;
-
+static int number;
 
 //===================
 //初期化処理
 //===================
 void InitSlingshot(void)
 {
+	number = 0;
 	press = false;
 	LPDIRECT3DDEVICE9  pDevice;
 	clickpoint = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -176,7 +177,7 @@ void UpdateSlingshot(void)
 
 	if (GetMousePress(MOUSE_INPUT_LEFT))
 	{
-		press = true;
+		
 		length = GetMouse();	
 
 		VERTEX_2D*pVtx; //頂点へのポインタ
@@ -226,9 +227,11 @@ void UpdateSlingshot(void)
 	}
 	else if (press)
 	{
-		move = D3DXVECTOR3(SCREEN_WIDTH / 2 + 200.0f, 350.0f, 0.0f) - length;
+		move = D3DXVECTOR3(SCREEN_WIDTH / 2, 350.0f, 0.0f) - length;
 		press = false;
-		MoveBall(move / 50.0f);
+		move /= 50.0f;
+
+		MoveBall(move, number);
 	}
 	else
 	{
@@ -258,8 +261,9 @@ void UpdateSlingshot(void)
 	}
 	if (GetMouseTrigger(MOUSE_INPUT_LEFT))
 	{
+		press = true;
 		clickpoint = GetMouse();
-		SetBall(length, 150, 0, 20.0f);
+		number = SetBall(length, 150, 0, 20.0f);
 	}
 }
 

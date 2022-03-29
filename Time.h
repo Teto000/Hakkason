@@ -3,7 +3,7 @@
 
 #include"main.h"
 
-#define	MAX_TIMER	(5)
+#define	MAX_TIMER	(2)
 
 //プロトタイプ宣言
 void InitTimer(void);
