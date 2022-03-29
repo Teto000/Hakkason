@@ -32,6 +32,8 @@ const char *s_FileName[] =
 	"data\\TEXTURE\\GAME\\Fox_UFO.png",			// UFO in きつね
 	"data\\TEXTURE\\GAME\\Light_Bright.png",	// 明るい街灯
 	"data\\TEXTURE\\GAME\\Light_Dark.png",		// 暗い街灯
+	"data\\TEXTURE\\GAME\\1t.png",				// 1t
+	"data\\TEXTURE\\GAME\\3t.png",				// 3t
 
 	//リザルト画面
 	"data\\TEXTURE\\RESULT\\GameClear.png",		// ゲームクリア画面の背景

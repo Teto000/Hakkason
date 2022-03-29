@@ -5,7 +5,7 @@
 #include"particle.h"
 #include "fade.h"
 #include "sound.h"
-
+#include "effect.h"
 #define KINDS (1)	//テクスチャ種類
 
 #define SIZ_X (50)	//サイズX
@@ -121,17 +121,19 @@ void UpdateLife(void)
 			for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 			{
 						Enemy *pEnemy = GetEnemy(nCntEnemy);
-						if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
-							&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
-							&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
-							&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
-						{//弾座標重なり
-							HitLife(1, nCnt);
-							pEnemy->bUse = false;
-
-							//サウンド開始
-							PlaySound(SOUND_LABEL_SE_EXPLOSION);
-
+						if (pEnemy->bUse)
+						{
+							if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
+								&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
+								&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
+								&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
+							{//弾座標重なり
+								HitLife(1, nCnt);
+								pEnemy->bUse = false;
+								SetEffect(s_Life[nCnt].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), EFFECTSTATE_SHOOT, 150, 200.0f, false);
+								//サウンド開始
+								PlaySound(SOUND_LABEL_SE_EXPLOSION);
+							}
 						}
 						
 			}
@@ -222,7 +224,7 @@ void HitLife(int nDamage,int number)
 			LIFE--;
 			if (LIFE <= 0 )
 			{
-				//SetFade(MODE_GAMEOVEL);
+				SetFade(MODE_GAMEOVER);
 			}
 		}
 	

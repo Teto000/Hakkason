@@ -19,6 +19,8 @@
 #include "texture.h"
 #include "ranking.h"
 #include"score.h"
+#include "gameover.h"
+#include "tutorial.h"
 
 //------------------------
 // マクロ定義
@@ -278,6 +280,10 @@ void Uninit(void)
 	// 入力処理の終了
 	UninitInput();
 
+	UninitTutorial();
+
+	UninitGameOver();
+
 	//Direct3Dデバイスの破棄
 	if (g_pD3DDevice != NULL)
 	{
@@ -317,6 +323,12 @@ void Update(void)
 		break;
 	case MODE_RANKING:
 		UpdateRanking();
+		break;
+	case MODE_GAMEOVER:
+		UpdateGameOver();
+		break;
+	case MODE_TUTORIAL:
+		UpdateTutorial();
 		break;
 	}
 
@@ -359,6 +371,12 @@ void Draw(void)
 		case MODE_RANKING:
 			DrawRanking();
 			break;
+		case MODE_GAMEOVER:
+			DrawGameOver();
+			break;
+		case MODE_TUTORIAL:
+			DrawTutorial();
+			break;
 		}
 
 		//フェードの描画処理
@@ -394,6 +412,12 @@ void SetMode(MODE mode)
 	case MODE_RANKING:
 		UninitRanking();
 		break;
+	case MODE_GAMEOVER:
+		UninitGameOver();
+		break;
+	case MODE_TUTORIAL:
+		UninitTutorial();
+		break;
 	}
 
 	//新しいモードの初期化
@@ -416,6 +440,12 @@ void SetMode(MODE mode)
 		int pScore;
 		pScore = GetScore();
 		SetRanking(pScore);
+		break;
+	case MODE_GAMEOVER:
+		InitGameOver();
+		break;
+	case MODE_TUTORIAL:
+		InitTutorial();
 		break;
 	}
 
