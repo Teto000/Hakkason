@@ -45,7 +45,7 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 void SetEnemy(void);
-int FindDistance(void);
+//int FindDistance(void);
 Enemy *GetEnemy(int a);
 
 #endif
