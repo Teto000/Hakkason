@@ -89,8 +89,8 @@ void InitEnemy(void)
 
 		if (enemy->nType == 0 || enemy->nType == 1)
 		{
-			int nMax = (int)(SCREEN_WIDTH - (WIDTH * 2));	//最大値
-			int nMin = (int)(WIDTH * 2);					//最小値
+			int nMax = (int)(SCREEN_WIDTH - (WIDTH * 6));	//最大値
+			int nMin = (int)(WIDTH * 4);					//最小値
 
 			enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
 		}

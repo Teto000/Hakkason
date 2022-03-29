@@ -95,7 +95,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInsetancePrev, LPSTR lpCmdLin
 	DWORD dwExecLastTime;	//Œ»İ‚Éˆ—‚µ‚½
 
 	//‰Šú‰»ˆ—
-	if (FAILED(Init(hInstance, hWnd, FALSE)))
+
+	if (FAILED(Init(hInstance, hWnd, FALSE)))	//‰æ–ÊƒTƒCƒY
 	{//‰Šú‰»ˆ—‚ª¸”s‚µ‚½ê‡
 		return -1;
 	}
