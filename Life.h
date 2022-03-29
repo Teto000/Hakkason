@@ -22,6 +22,8 @@ void UninitLife(void);
 void UpdateLife(void);
 void DrawLife(void);
 
+Life *GetLife(void);
+
 void SetLife(D3DXVECTOR3 pos, D3DXCOLOR col);
 void HitLife(int nDamage, int number);
 

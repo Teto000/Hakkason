@@ -211,3 +211,8 @@ void HitLife(int nDamage,int number)
 	//頂点をアンロックする
 	s_PvtxBuffLife->Unlock();
 }
+
+Life *GetLife(void)
+{
+	return &s_Life[0];
+}
