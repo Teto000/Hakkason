@@ -187,6 +187,7 @@ void UpdateBall(void)
 						&& g_aBall[nCntBall].pos.y + g_aBall[nCntBall].fSiz >= pEnemy->pos.y- HEIGHT
 						&& g_aBall[nCntBall].pos.y - g_aBall[nCntBall].fSiz <= pEnemy->pos.y+ HEIGHT)
 					{//’eÀ•Wd‚È‚è
+
 							g_aBall[nCntBall].kill++;
 							SetCombo(pEnemy->pos, 150, 0, 50, g_aBall[nCntBall].kill);
 							AddScore(10 * g_aBall[nCntBall].kill);

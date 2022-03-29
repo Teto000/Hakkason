@@ -19,6 +19,7 @@
 #include "texture.h"
 #include "ranking.h"
 #include"score.h"
+
 //------------------------
 // マクロ定義
 //------------------------
@@ -40,7 +41,7 @@ void Draw(void);
 //------------------------
 LPDIRECT3D9					g_pD3D = NULL;				//Direct3Dオブジェクトへのポインタ
 LPDIRECT3DDEVICE9			g_pD3DDevice = NULL;		//Direct3Dデバイスへのポインタ
-MODE g_mode = MODE_TITLE;	//現在のモード
+MODE g_mode = MODE_GAME;	//現在のモード
 
 //========================
 // メイン関数
@@ -239,7 +240,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	}
 
 	//サウンドの初期化処理
-	//InitSound(hWnd);
+	InitSound(hWnd);
 
 	//テクスチャの読み込み
 	LoadTexture();
@@ -269,7 +270,7 @@ void Uninit(void)
 	UninitResult();
 
 	//サウンドの終了処理
-	//UninitSound();
+	UninitSound();
 
 	//テクスチャの終了
 	UninitTexture();

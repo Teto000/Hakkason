@@ -2,7 +2,9 @@
 // インクルード
 #include "Life.h"
 #include "enemy.h"
+#include"particle.h"
 #include "fade.h"
+#include "sound.h"
 
 #define KINDS (1)	//テクスチャ種類
 
@@ -15,6 +17,9 @@ static Life s_Life[MAX_Life];
 static int LIFE;
 
 
+static bool Flg;
+static int timer;
+
 void InitLife(void)
 {
 	LIFE = 4;
@@ -23,7 +28,7 @@ void InitLife(void)
 
 	//テクスチャ読み込み	敵テクスチャ
 	D3DXCreateTextureFromFile(pDevice,
-		"t",				//ライフ
+		"data/TEXTURE/GAME/Flower.png",				//ライフ
 		&s_TextureLife[0]);
 
 	//頂点バッファの生成
@@ -42,7 +47,10 @@ void InitLife(void)
 		s_Life[Cnt].col = D3DXCOLOR (0.0f, 0.0f, 0.0f,0.0f);
 
 		int nLife = 1;					//体力
-		bool bUse = false;					//使用してるかどうか	
+		bool bUse = false;					//使用してるかどうか
+
+		Flg = false;
+		timer = 0;
 	}
 
 	VERTEX_2D*pVtx;
@@ -89,6 +97,7 @@ void InitLife(void)
 }
 void UninitLife(void)
 {
+	StopSound();
 	for (int count = 0; count < KINDS; count++)
 	{
 		if (s_TextureLife[count] != NULL)
@@ -106,7 +115,19 @@ void UninitLife(void)
 }
 void UpdateLife(void)
 {
+	Life *pLife = GetLife();
+	if (Flg)
+	{
+		timer++;
 
+		SetParticle(D3DXVECTOR3(pLife->pos.x, pLife->pos.y, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 50, 500, 0);
+
+		if (timer >= 30)
+		{
+			Flg = false;
+			timer = 0;
+		}
+	}
 	for (int nCnt = 0; nCnt < MAX_Life; nCnt++)
 	{
 		if (s_Life[nCnt].bUse)
@@ -121,6 +142,11 @@ void UpdateLife(void)
 						{//弾座標重なり
 							HitLife(1, nCnt);
 							pEnemy->bUse = false;
+
+							//サウンド開始
+							PlaySound(SOUND_LABEL_SE_EXPLOSION);
+
+							Flg = true;
 						}
 						
 						
