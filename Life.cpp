@@ -102,19 +102,18 @@ void UninitLife(void)
 		s_PvtxBuffLife->Release();
 		s_PvtxBuffLife = NULL;
 	}
-
 }
 void UpdateLife(void)
 {
 	for (int nCnt = 0; nCnt < MAX_Life; nCnt++)
 	{
-		if (s_Life[nCnt].pos.x + 25 >= pEnemy->pos.x - 25
-			&& s_Life[nCnt].pos.x - 25 <= pEnemy->pos.x + 25
-			&& s_Life[nCnt].pos.y + 25 >= pEnemy->pos.y - 25
-			&& s_Life[nCnt].pos.y - 25 <= pEnemy->pos.y + 25)
+		if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x - 70
+			&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x + 70
+			&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y - 70
+			&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y + 70)
 		{//弾座標重なり
 
-		
+			int a = 0;		//でバック用　消しておけ
 
 		}
 	}
