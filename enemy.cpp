@@ -36,11 +36,9 @@ static	LPDIRECT3DVERTEXBUFFER9		s_pVtxBuff = NULL;		//頂点バッファへのポインタ
 static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
 
 //値
-//対角線の長さを算出する
-static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));
-
-//対角線の角度を算出
-static float s_fAngle = atan2f(WIDTH, HEIGHT);
+static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));	//対角線の長さを算出する
+static float s_fAngle = atan2f(WIDTH, HEIGHT);		//対角線の角度を算出
+static D3DXVECTOR3 vecEnemy;	//プレイヤーとエネミー間のベクトル
 
 //========================
 // 敵の初期化処理
@@ -185,18 +183,24 @@ void UpdateEnemy(void)
 			//------------------------
 			// 敵の進行方向の回転
 			//------------------------
-			//enemy->pos.y += sinf(D3DX_PI * s_fAngle) * 2.0f;
+			//vecEnemy = pPlayer->pos - enemy->pos;	//距離を求める
+
+			//D3DXVec3Normalize(&vecEnemy, &vecEnemy);	//vecPlayerを1にする
+
+			//enemy->pos += vecEnemy * FALL_SPEED;		//プレイヤーに向かって移動
 
 			//------------------------
 			// 画面端の処理
 			//------------------------
-			if (enemy->pos.y - HEIGHT >= 700.0f)
+			if (enemy->pos.y - HEIGHT >= SCREEN_HEIGHT 
+				|| enemy->pos.x + WIDTH <= 0.0f 
+				|| enemy->pos.x - WIDTH >= SCREEN_WIDTH)
 			{//敵が地面の下に行った
 				enemy->bUse = false;	//敵を消す
 			}
 
 			//位置の更新
-			enemy->pos += enemy->move * sinf(enemy->rot.z + (D3DX_PI + s_fAngle));
+			enemy->pos += enemy->move;
 
 			//頂点座標の設定
 			pVtx[0].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;
@@ -278,10 +282,9 @@ void SetEnemy(void)
 
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
-			//enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
-			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 300.0f, 0.0f);		//位置
+			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
+			enemy->move = D3DXVECTOR3(3.0f, 0.0f, 0.0f);	//移動量
 			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
-			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
 			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
