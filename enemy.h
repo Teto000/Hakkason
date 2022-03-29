@@ -35,7 +35,7 @@ typedef struct
 #define FALL_SPEED	(0.75f)	//落下速度
 #define WIDTH	(60.0f)		//幅
 #define HEIGHT	(100.0f)	//高さ
-
+#define MAX_VECTOR (4)
 
 //------------------------
 // プロトタイプ宣言
@@ -45,7 +45,7 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 void SetEnemy(void);
-void FindDistance(int i);
+int FindDistance(void);
 Enemy *GetEnemy(int a);
 
 #endif

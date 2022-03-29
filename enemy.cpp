@@ -184,19 +184,22 @@ void UpdateEnemy(void)
 			//------------------------
 			if (enemy->pos.y >= 200.0f)
 			{
-				for (int i = 0; i < MAX_VECTOR; i++)
-				{
-					s_nNumber = FindDistance();
-				}
+				Life *pLife = GetLife();	//ライフ情報の取得
 
+				vecEnemy[0] = enemy->pos- pLife[0].pos;
+				vecEnemy[1] = enemy->pos- pLife[1].pos;
+				vecEnemy[2] = enemy->pos- pLife[2].pos;
+				vecEnemy[3] = enemy->pos- pLife[3].pos;
+
+				
+				s_nNumber = FindDistance();
+				
+				
+				float dist = D3DXVec3Length(&vecEnemy[s_nNumber]);
+			
 				if (enemy->bHorming == false)
 				{
-					float moveEnemyX = pLife[s_nNumber].pos.x - enemy->pos.x;
-					float moveEnemyY = pLife[s_nNumber].pos.y - enemy->pos.y;
-					float moveEnemyR = sqrtf(moveEnemyX * moveEnemyX + moveEnemyY * moveEnemyY);
-
-					enemy->move.x = (moveEnemyX / moveEnemyR) * 3.0f;
-					enemy->move.y = (moveEnemyY / moveEnemyR) * 3.0f;
+					enemy->pos += vecEnemy[s_nNumber] / dist * 5.0f;
 				}
 
 				if (enemy->pos.y >= pLife[s_nNumber].pos.y)
@@ -300,7 +303,7 @@ void SetEnemy(void)
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
-			enemy->move = D3DXVECTOR3(3.0f, 0.0f, 0.0f);	//移動量
+			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
 			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
 			enemy->bUse = true;			//使用しているか
 
@@ -345,33 +348,26 @@ int FindDistance(void)
 
 	if (pLife[0].bUse == true)
 	{//0番目が生きているなら
-		if (pLife[0].pos.x < pLife[1].pos.x && pLife[0].pos.x < pLife[2].pos.x && pLife[0].pos.x < pLife[3].pos.x)
+		if (vecEnemy[0].x >= vecEnemy[1].x)
 		{//0が一番小さい
-			s_nMin = 0;
-		}
-	}
-	if (pLife[1].bUse == true)
-	{//1番目が生きているなら
-		if (pLife[1].pos.x < pLife[0].pos.x && pLife[1].pos.x < pLife[2].pos.x && pLife[1].pos.x < pLife[3].pos.x)
-		{//1が一番小さい
+			if (vecEnemy[1].x >= vecEnemy[2].x)
+			{//0が一番小さい
+				if (vecEnemy[2].x <= vecEnemy[3].x)
+				{//0が一番小さい
+					s_nMin = 3;
+				}
+				s_nMin = 2;
+			}
 			s_nMin = 1;
 		}
-	}
-	if (pLife[2].bUse == true)
-	{//2番目が生きているなら
-		if (pLife[2].pos.x < pLife[0].pos.x && pLife[2].pos.x < pLife[1].pos.x && pLife[2].pos.x < pLife[3].pos.x)
-		{//2が一番小さい
-			s_nMin = 2;
+		else
+		{
+			s_nMin = 1;
 		}
+		
+	
 	}
-	if (pLife[3].bUse == true)
-	{//3番目が生きているなら
-		if (pLife[3].pos.x < pLife[0].pos.x && pLife[3].pos.x < pLife[1].pos.x && pLife[3].pos.x < pLife[2].pos.x)
-		{//3が一番小さい
-			s_nMin = 3;
-		}
-	}
-
+	
 	return s_nMin;	//一番近い値を返す
 }
 
