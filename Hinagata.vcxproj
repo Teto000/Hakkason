@@ -156,6 +156,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Life.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ranking.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="slingshot.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="Life.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="ranking.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="slingshot.h" />

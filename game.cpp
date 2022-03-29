@@ -130,6 +130,13 @@ void UpdateGame(void)
 
 		SetFade(MODE_RESULT);
 	}
+
+	if (GetKeyboardTrigger(DIK_SPACE) == true || GetJoypadTrigger(JOYKEY_A))
+	{
+
+		SetFade(MODE_RANKING);
+	}
+
 }
 
 //========================

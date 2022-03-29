@@ -78,6 +78,7 @@ void InitResult(void)
 
 	//頂点バッファをアンロックする
 	s_pVtxBuff->Unlock();
+
 }
 
 //========================
@@ -87,6 +88,7 @@ void UninitResult(void)
 {
 	//サウンドの停止
 	//StopSound();
+
 
 	//頂点バッファの破壊
 	if (s_pVtxBuff != NULL)
@@ -101,6 +103,7 @@ void UninitResult(void)
 //========================
 void UpdateResult(void)
 {
+
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
 	{
 		SetFade(MODE_TITLE);

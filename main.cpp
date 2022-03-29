@@ -17,7 +17,7 @@
 #include "game.h"
 #include "result.h"
 #include "texture.h"
-
+#include "ranking.h"
 //------------------------
 // マクロ定義
 //------------------------
@@ -313,6 +313,9 @@ void Update(void)
 		//リザルトの更新
 		UpdateResult();
 		break;
+	case MODE_RANKING:
+		UpdateRanking();
+		break;
 	}
 
 	//フェードの更新処理
@@ -351,6 +354,9 @@ void Draw(void)
 			//リザルトの描画
 			DrawResult();
 			break;
+		case MODE_RANKING:
+			DrawRanking();
+			break;
 		}
 
 		//フェードの描画処理
@@ -383,6 +389,9 @@ void SetMode(MODE mode)
 		//リザルトの終了処理
 		UninitResult();
 		break;
+	case MODE_RANKING:
+		UninitRanking();
+		break;
 	}
 
 	//新しいモードの初期化
@@ -399,6 +408,9 @@ void SetMode(MODE mode)
 	case MODE_RESULT:
 		//リザルトの初期化処理
 		InitResult();
+		break;
+	case MODE_RANKING:
+		InitRanking();
 		break;
 	}
 
