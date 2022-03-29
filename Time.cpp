@@ -81,7 +81,7 @@ void InitTimer(void)
 	//頂点バッファをアンロック
 	s_pVtxBuffTimer->Unlock();
 
-	SetTimer(30);			//30秒
+	SetTimer(90);			//30秒
 }
 
 //===================
@@ -212,7 +212,7 @@ void AddTimer(int nValue)
 	}
 	if (s_nTimer == 0)
 	{
-		//SetFADE(MODE_RESULT);		//ゲーム画面に移行
+		SetFade(MODE_RESULT);		//ゲーム画面に移行
 	}
 	//頂点バッファをアンロック
 	s_pVtxBuffTimer->Unlock();
