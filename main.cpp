@@ -18,6 +18,7 @@
 #include "result.h"
 #include "texture.h"
 #include "ranking.h"
+#include"score.h"
 //------------------------
 // É}ÉNÉçíËã`
 //------------------------
@@ -411,6 +412,9 @@ void SetMode(MODE mode)
 		break;
 	case MODE_RANKING:
 		InitRanking();
+		int pScore;
+		pScore = GetScore();
+		SetRanking(pScore);
 		break;
 	}
 
