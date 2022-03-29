@@ -3,6 +3,7 @@
 #include "Life.h"
 #include "enemy.h"
 #include "fade.h"
+#include "sound.h"
 
 #define KINDS (1)	//テクスチャ種類
 
@@ -89,6 +90,7 @@ void InitLife(void)
 }
 void UninitLife(void)
 {
+	StopSound();
 	for (int count = 0; count < KINDS; count++)
 	{
 		if (s_TextureLife[count] != NULL)
@@ -121,6 +123,9 @@ void UpdateLife(void)
 						{//弾座標重なり
 							HitLife(1, nCnt);
 							pEnemy->bUse = false;
+
+							//サウンド開始
+							PlaySound(SOUND_LABEL_SE_EXPLOSION);
 						}
 						
 						
