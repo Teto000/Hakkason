@@ -13,6 +13,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "bg.h"
+#include "enemy.h"
 
 //========================
 // ƒQ[ƒ€‚Ì‰Šú‰»ˆ—
@@ -21,6 +22,12 @@ void InitGame(void)
 {
 	//”wŒi‚Ì‰Šú‰»ˆ—
 	InitBG();
+
+	//“G‚Ì‰Šú‰»ˆ—
+	InitEnemy();
+
+	//“G‚Ìİ’èˆ—
+	//SetEnemy();
 
 	//ƒTƒEƒ“ƒh‚ÌÄ¶
 	//PlaySound(SOUND_LABEL_BGM000);
@@ -36,6 +43,9 @@ void UninitGame(void)
 
 	//”wŒi‚ÌI—¹ˆ—
 	UninitBG();
+
+	//“G‚ÌI—¹ˆ—
+	UninitEnemy();
 }
 
 //========================
@@ -45,6 +55,9 @@ void UpdateGame(void)
 {
 	//”wŒi‚ÌXVˆ—
 	UpdateBG();
+
+	//“G‚ÌXVˆ—
+	UpdateEnemy();
 
 	//‰æ–Ê‘JˆÚ
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
@@ -59,6 +72,9 @@ void UpdateGame(void)
 //========================
 void DrawGame(void)
 {
+	//“G‚Ì•`‰æˆ—
+	DrawEnemy();
+
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
 }

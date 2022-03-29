@@ -403,8 +403,6 @@ void SetMode(MODE mode)
 	case MODE_TITLE:
 		//タイトルの初期化処理
 		InitTitle();
-		//タイトルの設定処理
-		//SetTitleBG();
 		break;
 	case MODE_GAME:
 		//ゲームの初期化処理
