@@ -169,7 +169,7 @@ void SetEnemy(void)
 			enemy->pos = D3DXVECTOR3(500.0f, 300.0f, 0.0f);		//位置
 			enemy->fWidth = 50.0f;	//幅
 			enemy->fHeight = 50.0f;	//高さ
-			enemy->bUse = true;	//使用しているか
+			enemy->bUse = true;		//使用しているか
 
 			//頂点座標の設定
 			pVtx[0].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, -enemy->fHeight, 0.0f);

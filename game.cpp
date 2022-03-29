@@ -25,6 +25,12 @@ void InitGame(void)
 	//背景の初期化処理
 	InitBG();
 
+	//敵の初期化処理
+	InitEnemy();
+
+	//敵の設定処理
+	//SetEnemy();
+
 	InitScore();
 
 	//サウンドの再生
@@ -52,6 +58,9 @@ void UpdateGame(void)
 {
 	//背景の更新処理
 	UpdateBG();
+
+	//敵の更新処理
+	UpdateEnemy();
 
 	UpdateScore();
 
