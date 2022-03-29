@@ -22,6 +22,7 @@ typedef enum
 	SOUND_LABEL_SE_SHOT,		// ’e”­ŽË‰¹
 	SOUND_LABEL_SE_EXPLOSION,	// ”š”­‰¹
 	SOUND_LABEL_SE_NEXT,		// Œˆ’è‰¹
+	SOUND_LABEL_SE_EXP,		// “G‚Ì”š”­
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 

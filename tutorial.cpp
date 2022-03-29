@@ -26,6 +26,9 @@ static LPDIRECT3DVERTEXBUFFER9	s_pVtxBuff = NULL;	//頂点バッファへのポインタ;
 //=============================
 void InitTutorial(void)
 {
+	//サウンド開始
+	PlaySound(SOUND_LABEL_BGM001);
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	//デバイスの取得
 
 	//------------------------
@@ -89,7 +92,7 @@ void InitTutorial(void)
 void UninitTutorial(void)
 {
 	//サウンドの停止
-	//StopSound(SOUND_LABEL_SE_NEXT);
+	StopSound();
 
 	//頂点バッファの破壊
 	if (s_pVtxBuff != NULL)
@@ -113,7 +116,7 @@ void UpdateTutorial(void)
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
 	{
 
-		SetFade(MODE_GAME);
+		SetFade(MODE_TITLE);
 	}
 
 	//頂点バッファをアンロックする

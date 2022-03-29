@@ -166,19 +166,7 @@ void UpdateGame(void)
 
 	//‚Ï‚¿‚ñ‚±‚ÌXV
 	UpdateSlingshot();
-
-	//‰æ–Ê‘JˆÚ
-	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
-	{
-
-		SetFade(MODE_RESULT);
-	}
-
-	if (GetKeyboardTrigger(DIK_SPACE) == true || GetJoypadTrigger(JOYKEY_A))
-	{
-
-		SetFade(MODE_RANKING);
-	}
+	
 
 }
 
