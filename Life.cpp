@@ -46,8 +46,8 @@ void InitLife(void)
 		s_Life[Cnt].pos  = D3DXVECTOR3 (0.0f, 0.0f, 0.0f);			//位置
 		s_Life[Cnt].col = D3DXCOLOR (0.0f, 0.0f, 0.0f,0.0f);
 
-		int nLife = 1;					//体力
-		bool bUse = false;					//使用してるかどうか
+		s_Life[Cnt].nLife = 1;					//体力
+		s_Life[Cnt].bUse = false;					//使用してるかどうか
 
 		Flg = false;
 		timer = 0;
@@ -61,11 +61,11 @@ void InitLife(void)
 	for (int Cnt = 0; Cnt < MAX_Life; Cnt++, pVtx += 4)
 	{
 
-		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(0.0f, 100.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
+		////頂点座標の設定
+		//pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		//pVtx[1].pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
+		//pVtx[2].pos = D3DXVECTOR3(0.0f, 100.0f, 0.0f);
+		//pVtx[3].pos = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -144,7 +144,7 @@ void UpdateLife(void)
 							pEnemy->bUse = false;
 
 							//サウンド開始
-							PlaySound(SOUND_LABEL_SE_EXPLOSION);
+							PlaySound(SOUND_LABEL_BGM003);
 
 							Flg = true;
 						}
