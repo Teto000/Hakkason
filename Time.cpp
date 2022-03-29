@@ -6,8 +6,6 @@ static LPDIRECT3DTEXTURE9 s_pTextureTimer = NULL; //テクスチャのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuffTimer= NULL; //頂点バッファの設定
 
 static D3DXVECTOR3 s_pos; //スコアの位置	
-
-
 static int s_nTimer,nCut;
 
 //===================
@@ -15,7 +13,6 @@ static int s_nTimer,nCut;
 //===================
 void InitTimer(void)
 {
-
 	LPDIRECT3DDEVICE9  pDevice;
 	int nCntTimer;
 	s_nTimer = 0;

@@ -21,6 +21,8 @@
 #include"Time.h"
 #include "effect.h"
 #include "combo.h"
+#include "right.h"
+#include"particle.h"
 //------------------------------
 // ƒ}ƒNƒ’è‹`
 //------------------------------
@@ -42,6 +44,7 @@ void InitGame(void)
 {
 	//”wŒi‚Ì‰Šú‰»ˆ—
 	InitBG();
+	InitRight();
 
 	//“G‚Ì‰Šú‰»ˆ—
 	InitEnemy();
@@ -54,6 +57,8 @@ void InitGame(void)
 	InitLife();
 
 	InitScore();
+
+	InitParticle();
 
 	InitCombo();
 
@@ -78,8 +83,11 @@ void UninitGame(void)
 
 	//”wŒi‚ÌI—¹ˆ—
 	UninitBG();
+	UninitRight();
 
 	UninitLife();
+
+	UninitParticle();
 
 	UninitTimer();
 
@@ -105,12 +113,14 @@ void UpdateGame(void)
 
 	//”wŒi‚ÌXVˆ—
 	UpdateBG();
+	UpdateRight();
 
 	//“G‚ÌXVˆ—
 	UpdateEnemy();
 
 	UpdateEffect();
 
+	UpdateParticle();
 
 	UpdateCombo();
 
@@ -159,9 +169,13 @@ void DrawGame(void)
 {
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
+	DrawRight();
+
 	DrawEffect();
 	//“G‚Ì•`‰æˆ—
 	DrawEnemy();
+
+	DrawParticle();
 
 	DrawCombo();
 
