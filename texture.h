@@ -28,6 +28,7 @@ typedef enum
 
 	//リザルト画面
 	TEXTURE_RESULT_BG,		// リザルト画面の背景
+	TEXTURE_GAMEOVER,		// ゲームオーバー画面の背景
 
 	/*↓ エフェクト ↓*/
 	TEXTURE_Effect_fire,		// 炎のエフェクト
