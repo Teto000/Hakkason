@@ -96,7 +96,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInsetancePrev, LPSTR lpCmdLin
 
 	//初期化処理
 
-	if (FAILED(Init(hInstance, hWnd, TRUE)))	//画面サイズ
+	if (FAILED(Init(hInstance, hWnd, FALSE)))	//画面サイズ
 	{//初期化処理が失敗した場合
 		return -1;
 	}
