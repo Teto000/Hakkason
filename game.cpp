@@ -18,6 +18,7 @@
 #include "Life.h"
 #include "slingshot.h"
 #include "ball.h"
+#include"Time.h"
 //------------------------------
 // マクロ定義
 //------------------------------
@@ -46,6 +47,8 @@ void InitGame(void)
 	//敵の設定処理
 	SetEnemy();
 
+	InitTimer();
+
 	InitLife();
 
 	InitScore();
@@ -71,7 +74,9 @@ void UninitGame(void)
 	//背景の終了処理
 	UninitBG();
 
-	//UninitLife();
+	UninitLife();
+
+	UninitTimer();
 
 	UninitScore();
 
@@ -109,6 +114,8 @@ void UpdateGame(void)
 
 	UpdateLife();
 
+	UpdateTimer();
+
 	UpdateScore();
 
 	//玉更新
@@ -139,6 +146,8 @@ void DrawGame(void)
 	DrawLife();
 
 	DrawScore();
+
+	DrawTimer();
 
 	//玉描画
 	DrawBall();
