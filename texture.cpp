@@ -34,7 +34,7 @@ const char *s_FileName[] =
 	"data\\TEXTURE\\GAME\\Light_Dark.png",		// 暗い街灯
 
 	//リザルト画面
-	"data\\TEXTURE\\RESULT\\Result_BG.png",		// リザルトの背景
+	"data\\TEXTURE\\RESULT\\GameClear.png",		// ゲームクリア画面の背景
 	"data\\TEXTURE\\RESULT\\GameOver.png",		// ゲームオーバー画面の背景
 
     /*↓ エフェクト ↓*/
