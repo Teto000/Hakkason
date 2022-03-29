@@ -67,7 +67,7 @@ void InitEnemy(void)
 
 		enemy->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//位置
 		enemy->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動量
-		enemy->nPlace = 0.0f;	//出現場所
+		enemy->nPlace = 0;		//出現場所
 		enemy->fWidth = 0.0f;	//幅
 		enemy->fHeight = 0.0f;	//高さ
 		enemy->bUse = false;	//使用しているか
@@ -83,8 +83,8 @@ void InitEnemy(void)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
 
-		int nMax = SCREEN_WIDTH - enemy->fWidth;	//最大値
-		int nMin = enemy->fWidth;					//最小値
+		int nMax = (int)(SCREEN_WIDTH - enemy->fWidth);	//最大値
+		int nMin = (int)(enemy->fWidth);				//最小値
 
 		enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
 	}
@@ -161,6 +161,9 @@ void UpdateEnemy(void)
 		if (enemy->bUse == true)
 		{//敵が使用されているなら
 
+			//------------------------
+			// 画面端の処理
+			//------------------------
 			if (enemy->pos.y - enemy->fHeight >= 700.0f)
 			{//敵が地面の下に行った
 				enemy->bUse = false;	//敵を消す
@@ -232,7 +235,7 @@ void SetEnemy(void)
 
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
-			enemy->pos = D3DXVECTOR3(enemy->nPlace, 0.0f - enemy->fHeight, 0.0f);		//位置
+			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - enemy->fHeight, 0.0f);		//位置
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
 			enemy->fWidth = 60.0f;		//幅
 			enemy->fHeight = 100.0f;	//高さ

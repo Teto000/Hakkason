@@ -19,6 +19,7 @@ typedef enum
 	TEXTURE_GAME_BG,	// ゲーム画面の背景
 	TEXTURE_BOM,		//爆弾
 	TEXTURE_BALLOONBOM,	//風船付き爆弾
+	TEXTURE_FLOWER,		//花
 
 	//リザルト画面
 	TEXTURE_RESULT_BG,	// リザルト画面の背景
