@@ -40,6 +40,8 @@ static D3DXCOLOR nTimecol;	                //色
 //==============
 void InitRanking(void)
 {
+
+
 	LPDIRECT3DDEVICE9 pDevice;
 	VERTEX_2D *pVtx;
 	int nCntRank;
@@ -252,7 +254,7 @@ void InitRanking(void)
 	//頂点バッファをアンロックする
 	s_pVtxBuffRankBG->Unlock();
 	//サウンド開始
-	//PlaySound(SOUND_LABEL_BGM006);
+	PlaySound(SOUND_LABEL_BGM001);
 }
 
 //=========================================
