@@ -13,6 +13,9 @@
 #include "fade.h"
 #include "sound.h"
 #include "bg.h"
+#include "enemy.h"
+#include "score.h"
+
 
 //========================
 // ƒQ[ƒ€‚Ì‰Šú‰»ˆ—
@@ -59,6 +62,12 @@ void UpdateGame(void)
 //========================
 void DrawGame(void)
 {
+	//“G‚Ì•`‰æˆ—
+	DrawEnemy();
+
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
+
+	DrawScore();
+
 }

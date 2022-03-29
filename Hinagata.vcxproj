@@ -149,11 +149,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bg.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="score.cpp" />
     <ClCompile Include="slingshot.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -161,11 +163,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bg.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="slingshot.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="texture.h" />
