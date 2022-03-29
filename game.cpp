@@ -15,6 +15,7 @@
 #include "bg.h"
 #include "enemy.h"
 #include "score.h"
+#include "slingshot.h"
 
 
 //========================
@@ -33,6 +34,9 @@ void InitGame(void)
 
 	InitScore();
 
+	//ぱちんこの初期化
+	InitSlingshot();
+
 	//サウンドの再生
 	//PlaySound(SOUND_LABEL_BGM000);
 }
@@ -49,6 +53,9 @@ void UninitGame(void)
 	UninitBG();
 
 	UninitScore();
+
+	//ぱちんこの終了
+	UninitSlingshot();
 }
 
 //========================
@@ -63,6 +70,9 @@ void UpdateGame(void)
 	UpdateEnemy();
 
 	UpdateScore();
+
+	//ぱちんこの更新
+	UpdateSlingshot();
 
 	//画面遷移
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
@@ -85,4 +95,6 @@ void DrawGame(void)
 
 	DrawScore();
 
+	//ぱちんこの描画
+	DrawSlingshot();
 }
