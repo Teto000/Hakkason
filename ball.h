@@ -1,18 +1,10 @@
-bullet.h
-アクセスできるユーザー
 
-千
-堺
-東
-システム プロパティ
-種類
-テキスト
-#ifndef _BULL_H_
-#define _BULL_H_
+#ifndef _BALL_H_
+#define _BALL_H_
 
 #include"main.h"
 
-#define	MAX_BULL	(4096)
+#define	MAX_BALL	(4096)
 #define	MAX_RECIPE	(5)
 
 //構造体
@@ -26,13 +18,17 @@ typedef struct
 	int nType;
 	float fSiz; //サイズ
 	int Move2;
-}Bull;
+	bool moveset;
+	bool moveOn;
+
+}Ball;
 
 //プロトタイプ宣言
 void InitBall(void);
 void UninitBall(void);
 void UpdateBall(void);
 void DrawBall(void);
-void SetBall(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife, int nType, float fSiz);
+void SetBall(D3DXVECTOR3 pos,int nLife, int nType, float fSiz);
+void MoveBall(D3DXVECTOR3 move);
 
 #endif #pragma once

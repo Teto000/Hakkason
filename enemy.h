@@ -36,6 +36,6 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 void SetEnemy(void);
-Enemy *GetEnemy(void);
+Enemy *GetEnemy(int a);
 
 #endif

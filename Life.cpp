@@ -104,24 +104,22 @@ void UninitLife(void)
 }
 void UpdateLife(void)
 {
-	Enemy *pEnemy = GetEnemy();
+
 	for (int nCnt = 0; nCnt < MAX_Life; nCnt++)
 	{
 		if (s_Life[nCnt].bUse)
 		{
-			for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++, pEnemy++)
+			for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 			{
-				
-					if (pEnemy->bUse)
-					{
+						Enemy *pEnemy = GetEnemy(nCntEnemy);
 						if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
 							&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
 							&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
 							&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
 						{//弾座標重なり
-							HitLife(1);
+							HitLife(1, nCnt);
 						}
-					}
+					
 			}
 		}
 	}
@@ -192,24 +190,23 @@ void SetLife(D3DXVECTOR3 pos, D3DXCOLOR col)
 	s_PvtxBuffLife->Unlock();
 }
 
-void HitLife(int nDamage)
+void HitLife(int nDamage,int number)
 {
 
 	VERTEX_2D*pVtx;
 
 	//頂点バッファをロックし、頂点データへのポインタを取得
 	s_PvtxBuffLife->Lock(0, 0, (void**)&pVtx, 0);
-	for (int i = 0; i < MAX_Life; i++)
-	{
 
-		s_Life[i].nLife -= nDamage;
+		
+		s_Life[number].nLife -= nDamage;
 
-		if (s_Life[i].nLife <= 0)					//---------------プレイヤーが死んだら---------------
+		if (s_Life[number].nLife <= 0)					//---------------プレイヤーが死んだら---------------
 		{
-			s_Life[i].bUse = false;
+			s_Life[number].bUse = false;
 
 		}
-	}
+	
 
 	//頂点をアンロックする
 	s_PvtxBuffLife->Unlock();

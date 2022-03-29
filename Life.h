@@ -23,6 +23,6 @@ void UpdateLife(void);
 void DrawLife(void);
 
 void SetLife(D3DXVECTOR3 pos, D3DXCOLOR col);
-void HitLife(int nDamage);
+void HitLife(int nDamage, int number);
 
 #endif

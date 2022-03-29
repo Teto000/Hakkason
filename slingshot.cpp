@@ -6,6 +6,7 @@
 #include "game.h"
 #include "slingshot.h"
 #include "input.h"
+#include "ball.h"
 
 #define MAX_SIZE_Y (30.0f)
 #define MAX_SIZE_X (220.0f)
@@ -225,8 +226,9 @@ void UpdateSlingshot(void)
 	}
 	else if (press)
 	{
-		move = clickpoint - length;
+		move = D3DXVECTOR3(SCREEN_WIDTH / 2 + 200.0f, 350.0f, 0.0f) - length;
 		press = false;
+		MoveBall(move / 50.0f);
 	}
 	else
 	{
@@ -257,6 +259,7 @@ void UpdateSlingshot(void)
 	if (GetMouseTrigger(MOUSE_INPUT_LEFT))
 	{
 		clickpoint = GetMouse();
+		SetBall(length, 150, 0, 20.0f);
 	}
 }
 

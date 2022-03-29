@@ -17,7 +17,7 @@
 #include "score.h"
 #include "Life.h"
 #include "slingshot.h"
-
+#include "ball.h"
 //------------------------------
 // マクロ定義
 //------------------------------
@@ -49,6 +49,9 @@ void InitGame(void)
 
 	InitScore();
 
+	//玉初期化
+	InitBall();
+
 	//ぱちんこの初期化
 	InitSlingshot();
 
@@ -70,6 +73,9 @@ void UninitGame(void)
 	//UninitLife();
 
 	UninitScore();
+
+	//玉終了
+	UninitBall();
 
 	//ぱちんこの終了
 	UninitSlingshot();
@@ -101,6 +107,9 @@ void UpdateGame(void)
 
 	UpdateScore();
 
+	//玉更新
+	UpdateBall();
+
 	//ぱちんこの更新
 	UpdateSlingshot();
 
@@ -126,6 +135,9 @@ void DrawGame(void)
 	DrawLife();
 
 	DrawScore();
+
+	//玉描画
+	DrawBall();
 
 	//ぱちんこの描画
 	DrawSlingshot();

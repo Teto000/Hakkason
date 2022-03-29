@@ -21,7 +21,7 @@
 //------------------------
 // マクロ定義
 //------------------------
-
+#define	MAX_ENEMY	(256)	//敵の最大数
 #define FALL_SPEED	(1.0f)	//落下速度
 
 //------------------------
@@ -273,7 +273,7 @@ void SetEnemy(void)
 //========================
 // 敵情報の取得
 //========================
-Enemy *GetEnemy(void)
+Enemy *GetEnemy(int a)
 {
-	return &s_Enemy[0];
+	return &s_Enemy[a];
 }
