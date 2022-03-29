@@ -11,7 +11,7 @@
 static LPDIRECT3DTEXTURE9 s_TextureLife[KINDS] = {};			//テクスチャへのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_PvtxBuffLife = NULL;				//頂点バッファへのポインタ
 static Life s_Life[MAX_Life];
-static Enemy *pEnemy = GetEnemy();
+
 
 
 void InitLife(void)
@@ -39,7 +39,7 @@ void InitLife(void)
 		s_Life[Cnt].pos  = D3DXVECTOR3 (0.0f, 0.0f, 0.0f);			//位置
 		s_Life[Cnt].col = D3DXCOLOR (0.0f, 0.0f, 0.0f,0.0f);
 
-		int nLife = 0;					//体力
+		int nLife = 1;					//体力
 		bool bUse = false;					//使用してるかどうか	
 	}
 
@@ -79,11 +79,10 @@ void InitLife(void)
 		s_PvtxBuffLife->Unlock();
 
 		
-		SetEnemy(D3DXVECTOR3(200.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-		SetEnemy(D3DXVECTOR3(400.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-									 
-		SetEnemy(D3DXVECTOR3(900.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-		SetEnemy(D3DXVECTOR3(1100.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
+		SetLife(D3DXVECTOR3(200.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		SetLife(D3DXVECTOR3(400.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));								 
+		SetLife(D3DXVECTOR3(900.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		SetLife(D3DXVECTOR3(1100.0f, 600.0f, 0.0f),D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 }
 void UninitLife(void)
@@ -105,16 +104,23 @@ void UninitLife(void)
 }
 void UpdateLife(void)
 {
+
 	for (int nCnt = 0; nCnt < MAX_Life; nCnt++)
 	{
-		if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x - 70
-			&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x + 70
-			&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y - 70
-			&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y + 70)
-		{//弾座標重なり
-
-			int a = 0;		//でバック用　消しておけ
-
+		if (s_Life[nCnt].bUse)
+		{
+			for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
+			{
+						Enemy *pEnemy = GetEnemy(nCntEnemy);
+						if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
+							&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
+							&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
+							&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
+						{//弾座標重なり
+							HitLife(1, nCnt);
+						}
+					
+			}
 		}
 	}
 }
@@ -143,7 +149,7 @@ void DrawLife(void)
 		}
 	}
 }
-void SetEnemy(D3DXVECTOR3 pos, D3DXCOLOR col, int fLife)
+void SetLife(D3DXVECTOR3 pos, D3DXCOLOR col)
 {
 
 	VERTEX_2D*pVtx;
@@ -174,13 +180,34 @@ void SetEnemy(D3DXVECTOR3 pos, D3DXCOLOR col, int fLife)
 			pVtx[3].pos.y = s_Life[Cnt].pos.y + SIZ_Y;
 			pVtx[3].pos.z = 0.0f;
 
-			s_Life[Cnt].nLife = fLife;
 			s_Life[Cnt].col = col;
 			s_Life[Cnt].bUse = true;
 			break;
 		}
 		pVtx += 4;	//頂点座標データのポインタを４つ分進める
 	}
+	//頂点をアンロックする
+	s_PvtxBuffLife->Unlock();
+}
+
+void HitLife(int nDamage,int number)
+{
+
+	VERTEX_2D*pVtx;
+
+	//頂点バッファをロックし、頂点データへのポインタを取得
+	s_PvtxBuffLife->Lock(0, 0, (void**)&pVtx, 0);
+
+		
+		s_Life[number].nLife -= nDamage;
+
+		if (s_Life[number].nLife <= 0)					//---------------プレイヤーが死んだら---------------
+		{
+			s_Life[number].bUse = false;
+
+		}
+	
+
 	//頂点をアンロックする
 	s_PvtxBuffLife->Unlock();
 }

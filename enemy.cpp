@@ -319,7 +319,7 @@ void SetEnemy(void)
 //========================
 // “Gî•ñ‚Ìæ“¾
 //========================
-Enemy *GetEnemy(void)
+Enemy *GetEnemy(int a)
 {
-	return &s_Enemy[0];
+	return &s_Enemy[a];
 }

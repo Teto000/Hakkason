@@ -24,6 +24,8 @@ typedef struct
 	bool bUse;			//使用しているか
 }Enemy;
 
+#define	MAX_ENEMY	(256)	//敵の最大数
+
 //------------------------
 // プロトタイプ宣言
 //------------------------
@@ -32,6 +34,6 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 void SetEnemy(void);
-Enemy *GetEnemy(void);
+Enemy *GetEnemy(int a);
 
 #endif
