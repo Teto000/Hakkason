@@ -25,6 +25,8 @@ const char *s_FileName[] =
 
 	//ゲーム画面
 	"data\\TEXTURE\\GAME\\Game_BG.png",			//ゲーム画面の背景
+	"data\\TEXTURE\\GAME\\Bom.png",				//爆弾
+	"data\\TEXTURE\\GAME\\BalloonBom.png",		//風船付き爆弾
 
 	//リザルト画面
 	"data\\TEXTURE\\RESULT\\Result_BG.png",		//リザルトの背景

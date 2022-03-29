@@ -19,6 +19,7 @@
 // マクロ定義
 //------------------------
 #define	MAX_ENEMY	(256)	//敵の最大数
+#define FALL_SPEED	(1.0f)	//落下速度
 
 //------------------------
 // スタティック変数
@@ -39,10 +40,10 @@ void InitEnemy(void)
 	//------------------------
 	// テクスチャの読み込み
 	//------------------------
-	s_pTexture = TEXTURE_RESULT_BG;
+	s_pTexture = TEXTURE_BALLOONBOM;
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,	//確保するバッファのサイズ
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_ENEMY,	//確保するバッファのサイズ
 								D3DUSAGE_WRITEONLY,
 								FVF_VERTEX_2D,			//頂点フォーマット
 								D3DPOOL_MANAGED,
@@ -62,6 +63,7 @@ void InitEnemy(void)
 		Enemy *enemy = s_Enemy + nCnt;
 
 		enemy->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//位置
+		enemy->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//移動量
 		enemy->fWidth = 0.0f;	//幅
 		enemy->fHeight = 0.0f;	//高さ
 		enemy->bUse = false;	//使用しているか
@@ -70,29 +72,34 @@ void InitEnemy(void)
 	//------------------------
 	// 頂点情報の設定
 	//------------------------
-	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
+	{
+		//頂点座標の設定
+		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//rhwの設定
-	pVtx[0].rhw = 1.0f;
-	pVtx[1].rhw = 1.0f;
-	pVtx[2].rhw = 1.0f;
-	pVtx[3].rhw = 1.0f;
+		//rhwの設定
+		pVtx[0].rhw = 1.0f;
+		pVtx[1].rhw = 1.0f;
+		pVtx[2].rhw = 1.0f;
+		pVtx[3].rhw = 1.0f;
 
-	//頂点カラーの設定
-	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-	//テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+		//テクスチャ座標の設定
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+		pVtx += 4;
+	}
 
 	//サウンドの再生
 	//PlaySound(SOUND_LABEL_BGM002);
@@ -122,7 +129,38 @@ void UninitEnemy(void)
 //========================
 void UpdateEnemy(void)
 {
+	VERTEX_2D*pVtx;		//頂点情報へのポインタ
 
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	s_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
+	{
+		Enemy *enemy = s_Enemy + nCnt;
+
+		if (enemy->bUse == true)
+		{//敵が使用されているなら
+
+			if (enemy->pos.y - enemy->fHeight >= 700.0f)
+			{//敵が地面の下に行った
+				enemy->bUse = false;	//敵を消す
+			}
+
+			//位置の更新
+			enemy->pos += enemy->move;
+
+			//頂点座標の設定
+			pVtx[0].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, -enemy->fHeight, 0.0f);
+			pVtx[1].pos = enemy->pos + D3DXVECTOR3(enemy->fWidth, -enemy->fHeight, 0.0f);
+			pVtx[2].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, enemy->fHeight, 0.0f);
+			pVtx[3].pos = enemy->pos + D3DXVECTOR3(enemy->fWidth, enemy->fHeight, 0.0f);
+		}
+
+		pVtx += 4;
+	}
+
+	//頂点バッファをアンロックする
+	s_pVtxBuff->Unlock();
 }
 
 //========================
@@ -146,13 +184,13 @@ void DrawEnemy(void)
 		Enemy *enemy = s_Enemy + nCnt;
 
 		if (enemy->bUse == true)
-		{
+		{//敵が使用されているなら
 			//テクスチャの設定
 			pDevice->SetTexture(0, GetTexture(s_pTexture));
 
 			//敵の描画
 			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,		//プリミティブの種類
-								   0,						//描画する最初の頂点インデックス
+								   nCnt * 4,				//描画する最初の頂点インデックス
 								   2);						//描画するプリミティブ数
 		}
 	}
@@ -173,11 +211,12 @@ void SetEnemy(void)
 		Enemy *enemy = s_Enemy + nCnt;
 
 		if (enemy->bUse == false)
-		{
-			enemy->pos = D3DXVECTOR3(500.0f, 300.0f, 0.0f);		//位置
-			enemy->fWidth = 50.0f;	//幅
-			enemy->fHeight = 50.0f;	//高さ
-			enemy->bUse = true;		//使用しているか
+		{//敵が使用されていないなら
+			enemy->pos = D3DXVECTOR3(500.0f, 0.0f - enemy->fHeight, 0.0f);		//位置
+			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
+			enemy->fWidth = 60.0f;		//幅
+			enemy->fHeight = 100.0f;	//高さ
+			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
 			pVtx[0].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, -enemy->fHeight, 0.0f);

@@ -17,6 +17,17 @@
 #include "score.h"
 #include "slingshot.h"
 
+//------------------------------
+// マクロ定義
+//------------------------------
+#define MAX_POP_TIME	(160)				//敵の出現時間
+#define HALF_POP_TIME	(MAX_POP_TIME / 2)	//敵の出現時間の半分
+
+//------------------------
+// スタティック変数
+//------------------------
+static int s_nPopTime;		//出現時間
+
 
 //========================
 // ゲームの初期化処理
@@ -28,9 +39,6 @@ void InitGame(void)
 
 	//敵の初期化処理
 	InitEnemy();
-
-	//敵の設定処理
-	SetEnemy();
 
 	InitScore();
 
@@ -63,11 +71,20 @@ void UninitGame(void)
 //========================
 void UpdateGame(void)
 {
+	s_nPopTime++;				//タイムの加算
+	s_nPopTime %= MAX_POP_TIME;	//タイムの初期化
+
 	//背景の更新処理
 	UpdateBG();
 
 	//敵の更新処理
 	UpdateEnemy();
+
+	if (s_nPopTime == HALF_POP_TIME)
+	{
+		//敵の設定処理
+		SetEnemy();
+	}
 
 	UpdateScore();
 
