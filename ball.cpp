@@ -35,7 +35,7 @@ void InitBall(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data/TEXTURE/bullet000.png",
+		"Data/TEXTURE/49-4.png",
 		&g_pTextureBall[0]);
 
 	coleff = 1.0f;
@@ -190,7 +190,20 @@ void UpdateBall(void)
 
 							g_aBall[nCntBall].kill++;
 							SetCombo(pEnemy->pos, 150, 0, 50, g_aBall[nCntBall].kill);
-							AddScore(10 * g_aBall[nCntBall].kill);
+							
+							if (pEnemy->nType == 0)
+							{
+								AddScore(10 * g_aBall[nCntBall].kill);
+							}
+							if (pEnemy->nType == 1)
+							{
+								AddScore(30 * g_aBall[nCntBall].kill);
+							}
+							if (pEnemy->nType == 2)
+							{
+								AddScore(100 * g_aBall[nCntBall].kill);
+							}
+							
 							pEnemy->bUse = false;
 							// エフェクトの設定
 							SetEffect(pEnemy->pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), EFFECTSTATE_GOAL_POINT5, 50, 50.0f, false);
