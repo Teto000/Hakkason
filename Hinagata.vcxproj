@@ -158,6 +158,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="right.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="slingshot.cpp" />
     <ClCompile Include="sound.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="right.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="slingshot.h" />
     <ClInclude Include="sound.h" />

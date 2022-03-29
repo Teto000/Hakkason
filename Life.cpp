@@ -21,7 +21,7 @@ void InitLife(void)
 
 	//テクスチャ読み込み	敵テクスチャ
 	D3DXCreateTextureFromFile(pDevice,
-		"t",				//ライフ
+		"data/TEXTURE/GAME/Flower.png",				//ライフ
 		&s_TextureLife[0]);
 
 	//頂点バッファの生成

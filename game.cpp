@@ -19,6 +19,7 @@
 #include "slingshot.h"
 #include "ball.h"
 #include"Time.h"
+#include "right.h"
 //------------------------------
 // ƒ}ƒNƒ’è‹`
 //------------------------------
@@ -40,6 +41,7 @@ void InitGame(void)
 {
 	//”wŒi‚Ì‰Šú‰»ˆ—
 	InitBG();
+	InitRight();
 
 	//“G‚Ì‰Šú‰»ˆ—
 	InitEnemy();
@@ -73,6 +75,7 @@ void UninitGame(void)
 
 	//”wŒi‚ÌI—¹ˆ—
 	UninitBG();
+	UninitRight();
 
 	UninitLife();
 
@@ -97,6 +100,7 @@ void UpdateGame(void)
 
 	//”wŒi‚ÌXVˆ—
 	UpdateBG();
+	UpdateRight();
 
 	//“G‚ÌXVˆ—
 	UpdateEnemy();
@@ -146,6 +150,7 @@ void DrawGame(void)
 {
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
+	DrawRight();
 
 	//“G‚Ì•`‰æˆ—
 	DrawEnemy();
