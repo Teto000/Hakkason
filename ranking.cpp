@@ -582,17 +582,14 @@ void SetRanking(int nScore)
 
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{
-		int aPosTexU[8];
+		int aPosTexU[6];
 
-
-		aPosTexU[0] = s_aRankScore[nCntRank].nScore % 100000000 / 10000000;
-		aPosTexU[1] = s_aRankScore[nCntRank].nScore % 10000000 / 1000000;
-		aPosTexU[2] = s_aRankScore[nCntRank].nScore % 1000000 / 100000;
-		aPosTexU[3] = s_aRankScore[nCntRank].nScore % 100000 / 10000;
-		aPosTexU[4] = s_aRankScore[nCntRank].nScore % 10000 / 1000;
-		aPosTexU[5] = s_aRankScore[nCntRank].nScore % 1000 / 100;
-		aPosTexU[6] = s_aRankScore[nCntRank].nScore % 100 / 10;
-		aPosTexU[7] = s_aRankScore[nCntRank].nScore % 10 / 1;
+		aPosTexU[0] = s_aRankScore[nCntRank].nScore % 1000000 / 100000;
+		aPosTexU[1] = s_aRankScore[nCntRank].nScore % 100000 / 10000;
+		aPosTexU[2] = s_aRankScore[nCntRank].nScore % 10000 / 1000;
+		aPosTexU[3] = s_aRankScore[nCntRank].nScore % 1000 / 100;
+		aPosTexU[4] = s_aRankScore[nCntRank].nScore % 100 / 10;
+		aPosTexU[5] = s_aRankScore[nCntRank].nScore % 10 / 1;
 
 		for (nCnt2Rank = 0; nCnt2Rank < NUM_SCORE; nCnt2Rank++)
 		{

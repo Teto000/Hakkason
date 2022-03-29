@@ -81,7 +81,7 @@ void InitTimer(void)
 	//頂点バッファをアンロック
 	s_pVtxBuffTimer->Unlock();
 
-	SetTimer(3000);			//30秒
+	SetTimer(30);			//30秒
 }
 
 //===================
@@ -89,7 +89,6 @@ void InitTimer(void)
 //===================
 void UninitTimer(void)
 {
-
 	//テクスチャの破棄
 	if (s_pTextureTimer != NULL)
 	{
@@ -164,11 +163,11 @@ void SetTimer(int nTimer)
 	int aPosTexU[MAX_TIMER]; //各桁の数字を格納
 
 	s_nTimer = nTimer;
-	aPosTexU[0] = (s_nTimer % 100000) / 10000;
+	/*aPosTexU[0] = (s_nTimer % 100000) / 10000;
 	aPosTexU[1] = (s_nTimer % 10000) / 1000;
-	aPosTexU[2] = (s_nTimer % 1000) / 100;
-	aPosTexU[3] = (s_nTimer % 100) / 10;
-	aPosTexU[4] = (s_nTimer % 10) / 1;
+	aPosTexU[2] = (s_nTimer % 1000) / 100;*/
+	aPosTexU[0] = (s_nTimer % 100) / 10;
+	aPosTexU[1] = (s_nTimer % 10) / 1;
 
 	VERTEX_2D*pVtx; //頂点へのポインタ
 	s_pVtxBuffTimer->Lock(0, 0, (void**)&pVtx, 0);
@@ -195,11 +194,11 @@ void AddTimer(int nValue)
 	s_nTimer += nValue;
 
 
-	aPosTexU[0] = (s_nTimer % 100000) / 10000;
+	/*aPosTexU[0] = (s_nTimer % 100000) / 10000;
 	aPosTexU[1] = (s_nTimer % 10000) / 1000;
-	aPosTexU[2] = (s_nTimer % 1000) / 100;
-	aPosTexU[3] = (s_nTimer % 100) / 10;
-	aPosTexU[4] = (s_nTimer % 10) / 1;
+	aPosTexU[2] = (s_nTimer % 1000) / 100;*/
+	aPosTexU[0] = (s_nTimer % 100) / 10;
+	aPosTexU[1] = (s_nTimer % 10) / 1;
 
 	VERTEX_2D*pVtx; //頂点へのポインタ
 	s_pVtxBuffTimer->Lock(0, 0, (void**)&pVtx, 0);
