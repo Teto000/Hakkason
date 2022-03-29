@@ -46,8 +46,9 @@ void InitEnemy(void)
 	//------------------------
 	// テクスチャの読み込み
 	//------------------------
-	s_pTexture[0] = TEXTURE_BALLOONBOM;
-	s_pTexture[1] = TEXTURE_FOX_UFO;
+	s_pTexture[0] = TEXTURE_1t;
+	s_pTexture[1] = TEXTURE_3t;
+	s_pTexture[2] = TEXTURE_FOX_UFO;
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_ENEMY,	//確保するバッファのサイズ
@@ -86,10 +87,20 @@ void InitEnemy(void)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
 
-		int nMax = (int)(SCREEN_WIDTH - (WIDTH * 2));	//最大値
-		int nMin = (int)(WIDTH * 2);					//最小値
+		if (enemy->nType == 0 || enemy->nType == 1)
+		{
+			int nMax = (int)(SCREEN_WIDTH - (WIDTH * 2));	//最大値
+			int nMin = (int)(WIDTH * 2);					//最小値
 
-		enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
+			enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
+		}
+		else if (enemy->nType == 2)
+		{
+			int nMax = (int)(SCREEN_WIDTH - (WIDTH * 2));	//最大値
+			int nMin = 1000;								//最小値
+
+			enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
+		}
 	}
 
 	//------------------------
@@ -177,7 +188,7 @@ void UpdateEnemy(void)
 		if (enemy->bUse == true)
 		{//敵が使用されているなら
 
-			if (enemy->nType == 0)
+			if (enemy->nType == 0 || enemy->nType == 1)
 			{//風船
 				//------------------------
 				// 敵の進行方向の回転
@@ -186,7 +197,7 @@ void UpdateEnemy(void)
 
 				enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f) * 3.0f;
 			}
-			else if (enemy->nType == 1)
+			else if (enemy->nType == 2)
 			{//ごん
 				enemy->pos.x -= 2.0f;
 			}
@@ -296,8 +307,13 @@ void SetEnemy(int nType)
 			}
 			else if (enemy->nType == 1)
 			{
+				enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
+				enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED * 2.0f, 0.0f);	//移動量
+			}
+			else if (enemy->nType == 2)
+			{
 				enemy->pos = D3DXVECTOR3(1000.0f,0.0f - HEIGHT, 0.0f);		//位置
-				enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED * 1.5f, 0.0f);	//移動量
+				enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED * 2.0f, 0.0f);	//移動量
 			}
 			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//向き
 			enemy->bUse = true;		//使用しているか

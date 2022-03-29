@@ -38,6 +38,7 @@
 static int s_nPopTime;			//出現時間
 static int s_nRarePopTime;		//出現時間
 static int s_Acceleration = 0;	//加速
+static int nCntTex;				//テクスチャのカウント
 
 
 //========================
@@ -129,8 +130,18 @@ void UpdateGame(void)
 
 	if (s_nPopTime == HALF_POP_TIME)
 	{
-		//敵の設定処理
-		SetEnemy(0);
+		if (nCntTex < 4)
+		{
+			//敵の設定処理
+			SetEnemy(0);
+			nCntTex++;
+		}
+		else
+		{
+			//敵の設定処理
+			SetEnemy(1);
+			nCntTex = 0;
+		}
 
 		if (s_Acceleration <= MAX_SPEED)
 		{//最高速度じゃないなら
@@ -141,7 +152,7 @@ void UpdateGame(void)
 	if (s_nRarePopTime == HALF_RAREPOP_TIME)
 	{
 		//敵の設定処理
-		SetEnemy(1);
+		SetEnemy(2);
 	}
 
 	UpdateLife();

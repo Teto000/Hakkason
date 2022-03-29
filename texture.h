@@ -24,6 +24,8 @@ typedef enum
 	TEXTURE_FOX_UFO,		//UFO in ‚«‚Â‚Ë
 	TEXTURE_LIGHT_BRIGHT,	//–¾‚é‚¢ŠX“”
 	TEXTURE_LIGHT_DARK,		//ˆÃ‚¢ŠX“”
+	TEXTURE_1t,				//1t
+	TEXTURE_3t,				//3t
 
 
 	//ƒŠƒUƒ‹ƒg‰æ–Ê
