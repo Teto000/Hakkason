@@ -15,6 +15,9 @@
 #include "sound.h"
 #include "texture.h"
 
+#include <stdlib.h>
+#include <time.h>
+
 //------------------------
 // マクロ定義
 //------------------------
@@ -63,10 +66,27 @@ void InitEnemy(void)
 		Enemy *enemy = s_Enemy + nCnt;
 
 		enemy->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//位置
-		enemy->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//移動量
+		enemy->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動量
+		enemy->nPlace = 0.0f;	//出現場所
 		enemy->fWidth = 0.0f;	//幅
 		enemy->fHeight = 0.0f;	//高さ
 		enemy->bUse = false;	//使用しているか
+	}
+
+	//------------------------
+	// ランダムな値の生成
+	//------------------------
+	//時刻をもとにしたランダムな値を生成
+	srand((unsigned int)time(NULL));
+
+	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
+	{
+		Enemy *enemy = s_Enemy + nCnt;
+
+		int nMax = SCREEN_WIDTH - enemy->fWidth;	//最大値
+		int nMin = enemy->fWidth;					//最小値
+
+		enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
 	}
 
 	//------------------------
@@ -212,7 +232,7 @@ void SetEnemy(void)
 
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
-			enemy->pos = D3DXVECTOR3(500.0f, 0.0f - enemy->fHeight, 0.0f);		//位置
+			enemy->pos = D3DXVECTOR3(enemy->nPlace, 0.0f - enemy->fHeight, 0.0f);		//位置
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
 			enemy->fWidth = 60.0f;		//幅
 			enemy->fHeight = 100.0f;	//高さ

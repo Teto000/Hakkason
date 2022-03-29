@@ -19,6 +19,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;	//位置
 	D3DXVECTOR3 move;	//移動量
+	int nPlace;			//出現位置
 	float fWidth;		//幅
 	float fHeight;		//高さ
 	bool bUse;			//使用しているか
