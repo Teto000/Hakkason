@@ -15,6 +15,7 @@ typedef enum
 	//タイトル画面
 	TEXTURE_TITLE_BG,		// タイトル画面の背景
 	TEXTURE_TITLE_LOGO,		// タイトルロゴ
+	TEXTURE_TUTORIAL,		// チュートリアル画面
 
 	//ゲーム画面
 	TEXTURE_GAME_BG,		// ゲーム画面の背景
@@ -33,11 +34,11 @@ typedef enum
 	TEXTURE_GAMEOVER,		// ゲームオーバー画面の背景
 
 	/*↓ エフェクト ↓*/
-	TEXTURE_Effect_fire,		// 炎のエフェクト
-	TEXTURE_Effect_spin,		// ディスクのエフェクト
-	TEXTURE_Effect_tackle,		// タックルのエフェクト
-	TEXTURE_Effect_goal,		// ゴールのエフェクト
-	TEXTURE_Effect_spark,		// 壁のエフェクト
+	TEXTURE_Effect_fire,	// 炎のエフェクト
+	TEXTURE_Effect_spin,	// ディスクのエフェクト
+	TEXTURE_Effect_tackle,	// タックルのエフェクト
+	TEXTURE_Effect_goal,	// ゴールのエフェクト
+	TEXTURE_Effect_spark,	// 壁のエフェクト
 
 	TEXTURE_MAX,
 	TEXTURE_NONE,
