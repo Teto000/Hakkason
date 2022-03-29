@@ -4,7 +4,7 @@
 
 #include"main.h"
 
-#define	MAX_BALL	(4096)
+#define	MAX_BALL	(256)
 #define	MAX_RECIPE	(5)
 
 //構造体
@@ -16,6 +16,7 @@ typedef struct
 	bool bUse;		//使用してるかどうか
 	int Trigger;   //種類
 	int nType;
+	int kill;
 	float fSiz; //サイズ
 	int Move2;
 	bool moveset;
@@ -28,7 +29,7 @@ void InitBall(void);
 void UninitBall(void);
 void UpdateBall(void);
 void DrawBall(void);
-void SetBall(D3DXVECTOR3 pos,int nLife, int nType, float fSiz);
-void MoveBall(D3DXVECTOR3 move);
+int SetBall(D3DXVECTOR3 pos,int nLife, int nType, float fSiz);
+void MoveBall(D3DXVECTOR3 move,int number);
 
 #endif #pragma once
