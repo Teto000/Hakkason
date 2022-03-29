@@ -27,11 +27,11 @@ typedef struct
 //------------------------
 // マクロ定義
 //------------------------
-#define	MAX_ENEMY	(256)	//敵の最大数
+#define	MAX_ENEMY	(128)	//敵の最大数
 #define FALL_SPEED	(0.75f)	//落下速度
 #define WIDTH	(60.0f)		//幅
 #define HEIGHT	(100.0f)	//高さ
-
+#define ADD_ANGLE (0.005f)	//角度の加算値
 
 //------------------------
 // プロトタイプ宣言

@@ -14,6 +14,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "texture.h"
+#include "Life.h"
 
 #include <stdlib.h>
 #include <time.h>
@@ -31,7 +32,7 @@ static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
 //値
 static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));	//対角線の長さを算出する
 static float s_fAngle = atan2f(WIDTH, HEIGHT);		//対角線の角度を算出
-static D3DXVECTOR3 vecEnemy;	//プレイヤーとエネミー間のベクトル
+static float fAngle;	//角度
 
 //========================
 // 敵の初期化処理
@@ -82,8 +83,8 @@ void InitEnemy(void)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
 
-		int nMax = (int)(SCREEN_WIDTH - WIDTH);	//最大値
-		int nMin = (int)(WIDTH);				//最小値
+		int nMax = (int)(SCREEN_WIDTH - (WIDTH * 2));	//最大値
+		int nMin = (int)(WIDTH * 2);					//最小値
 
 		enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
 	}
@@ -166,6 +167,8 @@ void UpdateEnemy(void)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	s_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
+	Life *pLife = GetLife();	//ライフ情報の取得
+
 	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
@@ -176,11 +179,10 @@ void UpdateEnemy(void)
 			//------------------------
 			// 敵の進行方向の回転
 			//------------------------
-			//vecEnemy = pPlayer->pos - enemy->pos;	//距離を求める
+			fAngle += ADD_ANGLE;
 
-			//D3DXVec3Normalize(&vecEnemy, &vecEnemy);	//vecPlayerを1にする
-
-			//enemy->pos += vecEnemy * FALL_SPEED;		//プレイヤーに向かって移動
+			enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f) * 3.0f;
+			
 
 			//------------------------
 			// 画面端の処理
@@ -277,7 +279,7 @@ void SetEnemy(void)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
-			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
+			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
