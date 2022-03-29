@@ -33,6 +33,9 @@ static	LPDIRECT3DVERTEXBUFFER9		s_pVtxBuff = NULL;		//頂点バッファへのポインタ
 //構造体
 static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
 
+//値
+static float fAngle;	//回転角度
+
 //========================
 // 敵の初期化処理
 //========================
@@ -67,6 +70,7 @@ void InitEnemy(void)
 
 		enemy->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//位置
 		enemy->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動量
+		enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 		enemy->nPlace = 0;		//出現場所
 		enemy->fWidth = 0.0f;	//幅
 		enemy->fHeight = 0.0f;	//高さ
@@ -162,6 +166,15 @@ void UpdateEnemy(void)
 		{//敵が使用されているなら
 
 			//------------------------
+			// 敵の向きの回転
+			//------------------------
+			////角度の加算
+			//fAngle += 0.005f;
+
+			////敵の動きを曲げる
+			//enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f);
+
+			//------------------------
 			// 画面端の処理
 			//------------------------
 			if (enemy->pos.y - enemy->fHeight >= 700.0f)
@@ -254,4 +267,12 @@ void SetEnemy(void)
 
 	//頂点バッファをアンロックする
 	s_pVtxBuff->Unlock();
+}
+
+//========================
+// 敵情報の取得
+//========================
+Enemy *GetEnemy(void)
+{
+	return &s_Enemy[0];
 }
