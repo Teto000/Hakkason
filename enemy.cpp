@@ -250,6 +250,7 @@ void SetEnemy(void)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - enemy->fHeight, 0.0f);		//位置
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
+			enemy->rot = D3DXVECTOR3(45.0f, 45.0f, 0.0f);		//向き
 			enemy->fWidth = 60.0f;		//幅
 			enemy->fHeight = 100.0f;	//高さ
 			enemy->bUse = true;			//使用しているか
