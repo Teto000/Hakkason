@@ -11,7 +11,7 @@
 static LPDIRECT3DTEXTURE9 s_TextureLife[KINDS] = {};			//テクスチャへのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_PvtxBuffLife = NULL;				//頂点バッファへのポインタ
 static Life s_Life[MAX_Life];
-
+static Enemy *pEnemy = GetEnemy();
 
 
 void InitLife(void)
@@ -79,12 +79,11 @@ void InitLife(void)
 		s_PvtxBuffLife->Unlock();
 
 		
-		SetEnemy(D3DXVECTOR3(100.0f, 100.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-		SetEnemy(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-
-		SetEnemy(D3DXVECTOR3(500.0f, 100.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-		SetEnemy(D3DXVECTOR3(700.0f, 100.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-
+		SetEnemy(D3DXVECTOR3(200.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
+		SetEnemy(D3DXVECTOR3(400.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
+									 
+		SetEnemy(D3DXVECTOR3(900.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
+		SetEnemy(D3DXVECTOR3(1100.0f, 600.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
 
 }
 void UninitLife(void)
@@ -109,10 +108,10 @@ void UpdateLife(void)
 {
 	for (int nCnt = 0; nCnt < MAX_Life; nCnt++)
 	{
-		if (s_Life[Cnt].pos.x + 25 >= pPlayer->pos.x - 25
-			&& s_Life[Cnt].pos.x - 25 <= pPlayer->pos.x + 25
-			&& s_Life[Cnt].pos.y + 25 >= pPlayer->pos.y - 25
-			&& s_Life[Cnt].pos.y - 25 <= pPlayer->pos.y + 25)
+		if (s_Life[nCnt].pos.x + 25 >= pEnemy->pos.x - 25
+			&& s_Life[nCnt].pos.x - 25 <= pEnemy->pos.x + 25
+			&& s_Life[nCnt].pos.y + 25 >= pEnemy->pos.y - 25
+			&& s_Life[nCnt].pos.y - 25 <= pEnemy->pos.y + 25)
 		{//弾座標重なり
 
 		

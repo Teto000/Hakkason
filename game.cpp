@@ -43,7 +43,9 @@ void InitGame(void)
 	InitEnemy();
 
 	//“G‚Ìİ’èˆ—
-	//SetEnemy();
+	SetEnemy();
+
+	InitLife();
 
 	InitScore();
 
@@ -94,6 +96,8 @@ void UpdateGame(void)
 
 		s_Acceleration++;	//‰Á‘¬“x‚Ìã¸
 	}
+
+	UpdateLife();
 
 	UpdateScore();
 
