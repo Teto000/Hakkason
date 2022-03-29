@@ -15,7 +15,7 @@
 #include "bg.h"
 #include "enemy.h"
 #include "score.h"
-
+#include "Life.h"
 
 //========================
 // ƒQ[ƒ€‚Ì‰Šú‰»ˆ—
@@ -27,6 +27,8 @@ void InitGame(void)
 
 	//“G‚Ì‰Šú‰»ˆ—
 	InitEnemy();
+
+	InitLife();
 
 	//“G‚Ìİ’èˆ—
 	//SetEnemy();
@@ -48,6 +50,8 @@ void UninitGame(void)
 	//”wŒi‚ÌI—¹ˆ—
 	UninitBG();
 
+	UninitLife();
+
 	UninitScore();
 }
 
@@ -61,6 +65,8 @@ void UpdateGame(void)
 
 	//“G‚ÌXVˆ—
 	UpdateEnemy();
+
+	UpdateLife();
 
 	UpdateScore();
 
@@ -82,6 +88,8 @@ void DrawGame(void)
 
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
+
+	DrawLife();
 
 	DrawScore();
 
