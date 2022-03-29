@@ -268,7 +268,7 @@ void UpdateSlingshot(void)
 	{
 		press = true;
 		clickpoint = GetMouse();
-		number = SetBall(length, 150, 0, 20.0f);
+		number = SetBall(length, 150, 0, 30.0f);
 	}
 }
 

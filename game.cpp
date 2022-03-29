@@ -166,6 +166,7 @@ void UpdateGame(void)
 
 	//‚Ï‚¿‚ñ‚±‚ÌXV
 	UpdateSlingshot();
+	
 
 }
 
