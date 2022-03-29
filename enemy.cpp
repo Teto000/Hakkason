@@ -32,9 +32,7 @@ static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
 //値
 static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));	//対角線の長さを算出する
 static float s_fAngle = atan2f(WIDTH, HEIGHT);		//対角線の角度を算出
-static D3DXVECTOR3 vecEnemy[MAX_VECTOR];	//プレイヤーとエネミー間のベクトル
-static int s_nNumber;	//一番近い番号
-static int s_nMin;		//最小
+static float fAngle;	//角度
 
 //========================
 // 敵の初期化処理
@@ -73,7 +71,6 @@ void InitEnemy(void)
 		enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 		enemy->nPlace = 0;		//出現場所
 		enemy->bUse = false;	//使用しているか
-		enemy->bHorming = false;
 	}
 
 	//------------------------
@@ -182,32 +179,10 @@ void UpdateEnemy(void)
 			//------------------------
 			// 敵の進行方向の回転
 			//------------------------
-			if (enemy->pos.y >= 200.0f)
-			{
-				Life *pLife = GetLife();	//ライフ情報の取得
+			fAngle += ADD_ANGLE;
 
-				vecEnemy[0] = enemy->pos- pLife[0].pos;
-				vecEnemy[1] = enemy->pos- pLife[1].pos;
-				vecEnemy[2] = enemy->pos- pLife[2].pos;
-				vecEnemy[3] = enemy->pos- pLife[3].pos;
-
-				
-				s_nNumber = FindDistance();
-				
-				
-				float dist = D3DXVec3Length(&vecEnemy[s_nNumber]);
+			enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f) * 3.0f;
 			
-				if (enemy->bHorming == false)
-				{
-					enemy->pos += vecEnemy[s_nNumber] / dist * 5.0f;
-				}
-
-				if (enemy->pos.y >= pLife[s_nNumber].pos.y)
-				{
-					enemy->bHorming = true;
-					enemy->move.y = FALL_SPEED;
-				}
-			}
 
 			//------------------------
 			// 画面端の処理
@@ -304,7 +279,7 @@ void SetEnemy(void)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
-			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
+			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
@@ -337,38 +312,6 @@ void SetEnemy(void)
 
 	//頂点バッファをアンロックする
 	s_pVtxBuff->Unlock();
-}
-
-//===========================
-// 敵とライフの距離を求める
-//===========================
-int FindDistance(void)
-{
-	Life *pLife = GetLife();	//ライフ情報の取得
-
-	if (pLife[0].bUse == true)
-	{//0番目が生きているなら
-		if (vecEnemy[0].x >= vecEnemy[1].x)
-		{//0が一番小さい
-			if (vecEnemy[1].x >= vecEnemy[2].x)
-			{//0が一番小さい
-				if (vecEnemy[2].x <= vecEnemy[3].x)
-				{//0が一番小さい
-					s_nMin = 3;
-				}
-				s_nMin = 2;
-			}
-			s_nMin = 1;
-		}
-		else
-		{
-			s_nMin = 1;
-		}
-		
-	
-	}
-	
-	return s_nMin;	//一番近い値を返す
 }
 
 //========================
