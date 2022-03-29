@@ -32,7 +32,7 @@ typedef struct
 #define	MAX_RARE_ENEMY	(24)		//レア敵の最大数
 #define	MAX_TEXTURE		(3)			//テクスチャの最大数
 #define	FALL_SPEED		(0.75f)		//落下速度
-#define	WIDTH			(60.0f)		//幅
+#define	WIDTH			(80.0f)		//幅
 #define	HEIGHT			(100.0f)	//高さ
 #define	RARE_WIDTH		(200.0f)	//幅
 #define	RARE_HEIGHT		(150.0f)	//高さ
