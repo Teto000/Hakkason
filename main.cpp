@@ -231,14 +231,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
 
-	//キーボードの初期化処理
-	if (FAILED(InitKeyboard(hInstance, hWnd)))
-	{
-		return E_FAIL;
-	}
-
-	//ジョイパッドの初期化処理
-	if (FAILED(InitJoypad()))
+	// 入力処理の初期化
+	if (FAILED(InitInput(hInstance, hWnd)))
 	{
 		return E_FAIL;
 	}
@@ -279,11 +273,8 @@ void Uninit(void)
 	//テクスチャの終了
 	UninitTexture();
 
-	//キーボードの終了処理
-	UninitKeyboard();
-
-	//ジョイパッドの終了処理
-	UninitJoypad();
+	// 入力処理の終了
+	UninitInput();
 
 	//Direct3Dデバイスの破棄
 	if (g_pD3DDevice != NULL)
@@ -305,11 +296,8 @@ void Uninit(void)
 //========================
 void Update(void)
 {
-	//キーボードの更新処理
-	UpdateKeyboard();
-
-	//ジョイパッドの更新処理
-	UpdateJoypad();
+	// 入力処理の更新
+	UpdateInput();
 
 	switch (g_mode)
 	{
