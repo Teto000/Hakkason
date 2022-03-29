@@ -19,6 +19,7 @@
 // マクロ定義
 //------------------------
 #define	MAX_ENEMY	(256)	//敵の最大数
+#define FALL_SPEED	(1.0f)	//落下速度
 
 //------------------------
 // スタティック変数
@@ -39,7 +40,7 @@ void InitEnemy(void)
 	//------------------------
 	// テクスチャの読み込み
 	//------------------------
-	s_pTexture = TEXTURE_BOM;
+	s_pTexture = TEXTURE_BALLOONBOM;
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_ENEMY,	//確保するバッファのサイズ
@@ -139,6 +140,12 @@ void UpdateEnemy(void)
 
 		if (enemy->bUse == true)
 		{//敵が使用されているなら
+
+			if (enemy->pos.y - enemy->fHeight >= 700.0f)
+			{//敵が地面の下に行った
+				enemy->bUse = false;	//敵を消す
+			}
+
 			//位置の更新
 			enemy->pos += enemy->move;
 
@@ -205,11 +212,11 @@ void SetEnemy(void)
 
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
-			enemy->pos = D3DXVECTOR3(500.0f, 300.0f, 0.0f);		//位置
-			enemy->move = D3DXVECTOR3(0.0f, 2.0f, 0.0f);		//移動量
-			enemy->fWidth = 50.0f;	//幅
-			enemy->fHeight = 50.0f;	//高さ
-			enemy->bUse = true;		//使用しているか
+			enemy->pos = D3DXVECTOR3(500.0f, 0.0f - enemy->fHeight, 0.0f);		//位置
+			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
+			enemy->fWidth = 60.0f;		//幅
+			enemy->fHeight = 100.0f;	//高さ
+			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
 			pVtx[0].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, -enemy->fHeight, 0.0f);
