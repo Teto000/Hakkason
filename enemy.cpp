@@ -72,9 +72,9 @@ void InitEnemy(void)
 	//------------------------
 	//頂点座標の設定
 	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(SCREEN_WIDTH, 0.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(0.0f, SCREEN_HEIGHT, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//rhwの設定
 	pVtx[0].rhw = 1.0f;
@@ -141,13 +141,21 @@ void DrawEnemy(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//テクスチャの設定
-	pDevice->SetTexture(0, GetTexture(s_pTexture));
+	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
+	{
+		Enemy *enemy = s_Enemy + nCnt;
 
-	//プレイヤーの描画
-	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,		//プリミティブの種類
-						   0,						//描画する最初の頂点インデックス
-						   2);						//描画するプリミティブ数
+		if (enemy->bUse == true)
+		{
+			//テクスチャの設定
+			pDevice->SetTexture(0, GetTexture(s_pTexture));
+
+			//敵の描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,		//プリミティブの種類
+								   0,						//描画する最初の頂点インデックス
+								   2);						//描画するプリミティブ数
+		}
+	}
 }
 
 //========================

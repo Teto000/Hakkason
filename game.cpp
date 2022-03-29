@@ -29,7 +29,7 @@ void InitGame(void)
 	InitEnemy();
 
 	//“G‚Ìİ’èˆ—
-	//SetEnemy();
+	SetEnemy();
 
 	InitScore();
 
@@ -77,11 +77,11 @@ void UpdateGame(void)
 //========================
 void DrawGame(void)
 {
-	//“G‚Ì•`‰æˆ—
-	DrawEnemy();
-
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
+
+	//“G‚Ì•`‰æˆ—
+	DrawEnemy();
 
 	DrawScore();
 
