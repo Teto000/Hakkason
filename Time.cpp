@@ -210,7 +210,7 @@ void AddTimer(int nValue)
 
 		pVtx += 4; //頂点ポイントを四つ進む
 	}
-	if (s_nTimer == 0)
+	if (s_nTimer <= 0)
 	{
 		SetFade(MODE_RESULT);		//ゲーム画面に移行
 	}

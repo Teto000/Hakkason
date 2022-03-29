@@ -212,7 +212,6 @@ void HitLife(int nDamage,int number)
 			LIFE--;
 			if (LIFE <= 0 )
 			{
-				LIFE--;
 				//SetFade(MODE_GAMEOVEL);
 			}
 		}
