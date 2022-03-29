@@ -67,7 +67,7 @@ void UninitGame(void)
 	//”wŒi‚ÌI—¹ˆ—
 	UninitBG();
 
-	UninitLife();
+	//UninitLife();
 
 	UninitScore();
 
@@ -122,9 +122,6 @@ void DrawGame(void)
 
 	//“G‚Ì•`‰æˆ—
 	DrawEnemy();
-
-	//”wŒi‚Ì•`‰æˆ—
-	DrawBG();
 
 	DrawLife();
 
