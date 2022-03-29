@@ -23,14 +23,16 @@
 //------------------------
 // スタティック変数
 //------------------------
-static	TEXTURE		s_pTexture;		//テクスチャへのポインタ
+static	TEXTURE		s_pTexture[MAX_TEXTURE];				//テクスチャへのポインタ
 static	LPDIRECT3DVERTEXBUFFER9		s_pVtxBuff = NULL;		//頂点バッファへのポインタ
+static Life *pLife = GetLife();		//ライフ情報の取得
 
 //構造体
-static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
+static	Enemy s_Enemy[MAX_ENEMY];					//敵の構造体
 
 //値
 static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));	//対角線の長さを算出する
+static float s_fRareLength = sqrtf((RARE_WIDTH * RARE_WIDTH) + (RARE_HEIGHT * RARE_HEIGHT));	//対角線の長さを算出する
 static float s_fAngle = atan2f(WIDTH, HEIGHT);		//対角線の角度を算出
 static float fAngle;	//角度
 
@@ -44,7 +46,8 @@ void InitEnemy(void)
 	//------------------------
 	// テクスチャの読み込み
 	//------------------------
-	s_pTexture = TEXTURE_BALLOONBOM;
+	s_pTexture[0] = TEXTURE_BALLOONBOM;
+	s_pTexture[1] = TEXTURE_FOX_UFO;
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_ENEMY,	//確保するバッファのサイズ
@@ -164,10 +167,8 @@ void UpdateEnemy(void)
 {
 	VERTEX_2D*pVtx;		//頂点情報へのポインタ
 
-	//頂点バッファをロックし、頂点情報へのポインタを取得
+						//頂点バッファをロックし、頂点情報へのポインタを取得
 	s_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-	Life *pLife = GetLife();	//ライフ情報の取得
 
 	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
 	{
@@ -176,19 +177,19 @@ void UpdateEnemy(void)
 		if (enemy->bUse == true)
 		{//敵が使用されているなら
 
-			//------------------------
-			// 敵の進行方向の回転
-			//------------------------
+		 //------------------------
+		 // 敵の進行方向の回転
+		 //------------------------
 			fAngle += ADD_ANGLE;
 
 			enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f) * 3.0f;
-			
+
 
 			//------------------------
 			// 画面端の処理
 			//------------------------
-			if (enemy->pos.y - HEIGHT >= SCREEN_HEIGHT 
-				|| enemy->pos.x + WIDTH <= 0.0f 
+			if (enemy->pos.y - HEIGHT >= SCREEN_HEIGHT
+				|| enemy->pos.x + WIDTH <= 0.0f
 				|| enemy->pos.x - WIDTH >= SCREEN_WIDTH)
 			{//敵が地面の下に行った
 				enemy->bUse = false;	//敵を消す
@@ -244,6 +245,9 @@ void DrawEnemy(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
+	//----------------
+	// 敵の描画
+	//----------------
 	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
@@ -251,7 +255,7 @@ void DrawEnemy(void)
 		if (enemy->bUse == true)
 		{//敵が使用されているなら
 			//テクスチャの設定
-			pDevice->SetTexture(0, GetTexture(s_pTexture));
+			pDevice->SetTexture(0, GetTexture(s_pTexture[enemy->nType]));
 
 			//敵の描画
 			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,		//プリミティブの種類
@@ -264,7 +268,7 @@ void DrawEnemy(void)
 //========================
 // 敵の設定処理
 //========================
-void SetEnemy(void)
+void SetEnemy(int nType)
 {
 	VERTEX_2D*pVtx;		//頂点情報へのポインタ
 
@@ -279,8 +283,9 @@ void SetEnemy(void)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
-			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
-			enemy->bUse = true;			//使用しているか
+			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//向き
+			enemy->bUse = true;		//使用しているか
+			enemy->nType = nType;
 
 			//頂点座標の設定
 			pVtx[0].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;

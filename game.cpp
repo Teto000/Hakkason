@@ -26,12 +26,15 @@
 //------------------------------
 #define MAX_POP_TIME	(160 - s_Acceleration)		//敵の出現時間
 #define HALF_POP_TIME	(MAX_POP_TIME / 2)			//敵の出現時間の半分
+#define MAX_RAREPOP_TIME	(640)		//敵の出現時間
+#define HALF_RAREPOP_TIME	(MAX_POP_TIME / 2)			//敵の出現時間の半分
 #define MAX_SPEED		(50)		//最高速度
 
 //------------------------
 // スタティック変数
 //------------------------
 static int s_nPopTime;			//出現時間
+static int s_nRarePopTime;		//出現時間
 static int s_Acceleration = 0;	//加速
 
 
@@ -45,9 +48,6 @@ void InitGame(void)
 
 	//敵の初期化処理
 	InitEnemy();
-
-	//敵の設定処理
-	SetEnemy();
 
 	InitTimer();
 
@@ -103,6 +103,9 @@ void UpdateGame(void)
 	s_nPopTime++;				//タイムの加算
 	s_nPopTime %= MAX_POP_TIME;	//タイムの初期化
 
+	s_nRarePopTime++;					//タイムの加算
+	s_nRarePopTime %= MAX_RAREPOP_TIME;	//タイムの初期化
+
 	//背景の更新処理
 	UpdateBG();
 
@@ -117,12 +120,18 @@ void UpdateGame(void)
 	if (s_nPopTime == HALF_POP_TIME)
 	{
 		//敵の設定処理
-		SetEnemy();
+		SetEnemy(0);
 
 		if (s_Acceleration <= MAX_SPEED)
 		{//最高速度じゃないなら
 			s_Acceleration++;	//加速度の上昇
 		}
+	}
+
+	if (s_nPopTime == HALF_RAREPOP_TIME)
+	{
+		//敵の設定処理
+		SetEnemy(1);
 	}
 
 	UpdateLife();
