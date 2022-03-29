@@ -107,7 +107,7 @@ void UpdateTimer(void)
 {
 	bool bUse = false;
 
-	if (nCut == 60)
+	if (nCut == 120)
 	{
 		AddTimer(-1);
 		nCut = 0;
