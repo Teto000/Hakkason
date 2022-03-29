@@ -51,6 +51,9 @@
     <ClCompile Include="score.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="ball.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Life.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -86,6 +89,17 @@
     <ClInclude Include="slingshot.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< .mine
+    <ClInclude Include="enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ball.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+=======
     <ClInclude Include="enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -95,5 +109,6 @@
     <ClInclude Include="Life.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+>>>>>>> .theirs
   </ItemGroup>
 </Project>
