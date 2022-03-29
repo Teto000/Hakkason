@@ -13,6 +13,8 @@
 #include "fade.h"
 #include "sound.h"
 #include "bg.h"
+#include "score.h"
+
 
 //========================
 // ƒQ[ƒ€‚Ì‰Šú‰»ˆ—
@@ -21,6 +23,8 @@ void InitGame(void)
 {
 	//”wŒi‚Ì‰Šú‰»ˆ—
 	InitBG();
+
+	InitScore();
 
 	//ƒTƒEƒ“ƒh‚ÌÄ¶
 	//PlaySound(SOUND_LABEL_BGM000);
@@ -36,6 +40,8 @@ void UninitGame(void)
 
 	//”wŒi‚ÌI—¹ˆ—
 	UninitBG();
+
+	UninitScore();
 }
 
 //========================
@@ -45,6 +51,8 @@ void UpdateGame(void)
 {
 	//”wŒi‚ÌXVˆ—
 	UpdateBG();
+
+	UpdateScore();
 
 	//‰æ–Ê‘JˆÚ
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
@@ -61,4 +69,7 @@ void DrawGame(void)
 {
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
+
+	DrawScore();
+
 }
