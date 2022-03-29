@@ -7,6 +7,7 @@
 #include "sound.h"
 #include "fade.h"
 //#include "particle.h"
+#include "sound.h"
 
 //画像の数
 #define NUM_TITLE (9)
@@ -237,6 +238,10 @@ void UpdateTitle(void)
 			if ((GetKeyboardTrigger(DIK_W) ||
 				GetKeyboardTrigger(JOYKEY_UP)) && pFade == FADE_NONE)
 			{//上おした減算
+
+			 //サウンド開始
+				PlaySound(SOUND_LABEL_SE_NEXT);
+
 				s_Title[nCnt].nSelect--;
 				//PlaySound(SOUND_LABEL_SE_MOVE);
 				if (s_Title[nCnt].nSelect < 0)
@@ -247,6 +252,10 @@ void UpdateTitle(void)
 			else if ((GetKeyboardTrigger(DIK_S) ||
 				GetKeyboardTrigger(JOYKEY_DOWN)) && pFade == FADE_NONE)
 			{//したキー加算
+
+			 //サウンド開始
+				PlaySound(SOUND_LABEL_SE_NEXT);
+
 				s_Title[nCnt].nSelect++;
 				//PlaySound(SOUND_LABEL_SE_MOVE);
 				if (s_Title[nCnt].nSelect >= 3)
@@ -278,6 +287,9 @@ void UpdateTitle(void)
 			if ((GetKeyboardTrigger(DIK_RETURN) ||
 				GetKeyboardTrigger(JOYKEY_B)) && pFade == FADE_NONE)
 			{
+				//サウンド開始
+				PlaySound(SOUND_LABEL_SE_NEXT);
+
 				//メニューの内容
 				switch (s_Title[nCnt].nSelect)
 				{

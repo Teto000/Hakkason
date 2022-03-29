@@ -7,6 +7,7 @@
 #include "slingshot.h"
 #include "input.h"
 #include "ball.h"
+#include "sound.h"
 
 #define MAX_SIZE_Y (30.0f)
 #define MAX_SIZE_X (220.0f)
@@ -138,6 +139,8 @@ void InitSlingshot(void)
 //===================
 void UninitSlingshot(void)
 {
+	StopSound();
+
 	//テクスチャの破棄
 	if (s_pTextureSlingshotleft != NULL)
 	{
@@ -230,6 +233,8 @@ void UpdateSlingshot(void)
 		move = D3DXVECTOR3(SCREEN_WIDTH / 2, 350.0f, 0.0f) - length;
 		press = false;
 		move /= 50.0f;
+
+		PlaySound(SOUND_LABEL_SE_SHOT);
 
 		MoveBall(move, number);
 	}

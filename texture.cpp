@@ -23,6 +23,7 @@ const char *s_FileName[] =
 	//タイトル画面
 	"data\\TEXTURE\\TITLE\\Title_BG.png",		// タイトル画面の背景
 	"data\\TEXTURE\\TITLE\\Title_Logo.png",		// タイトルロゴ
+	"data\\TEXTURE\\TITLE\\Tutorial.png",		// チュートリアル画面
 
 	//ゲーム画面
 	"data\\TEXTURE\\GAME\\Game_BG.png",			// ゲーム画面の背景

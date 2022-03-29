@@ -12,6 +12,7 @@
 #include "score.h"
 #include "effect.h"
 #include "combo.h"
+#include "sound.h"
 
 #define	NUR_BALL	(1)
 
@@ -110,6 +111,8 @@ void InitBall(void)
 //==================
 void UninitBall(void)
 {
+	StopSound();
+
 	int nCntBall;
 	for (nCntBall = 0; nCntBall < NUR_BALL; nCntBall++)
 	{
@@ -187,6 +190,9 @@ void UpdateBall(void)
 						&& g_aBall[nCntBall].pos.y + g_aBall[nCntBall].fSiz >= pEnemy->pos.y- HEIGHT
 						&& g_aBall[nCntBall].pos.y - g_aBall[nCntBall].fSiz <= pEnemy->pos.y+ HEIGHT)
 					{//’eÀ•Wd‚È‚è
+
+							PlaySound(SOUND_LABEL_SE_EXP);
+
 
 							g_aBall[nCntBall].kill++;
 							SetCombo(pEnemy->pos, 150, 0, 50, g_aBall[nCntBall].kill);

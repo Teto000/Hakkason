@@ -31,15 +31,15 @@ void InitTutorial(void)
 	//------------------------
 	// テクスチャの読み込み
 	//------------------------
-	s_pTexture = TEXTURE_GAMEOVER;
+	s_pTexture = TEXTURE_TUTORIAL;
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,	//確保するバッファのサイズ
-		D3DUSAGE_WRITEONLY,
-		FVF_VERTEX_2D,			//頂点フォーマット
-		D3DPOOL_MANAGED,
-		&s_pVtxBuff,
-		NULL);
+								D3DUSAGE_WRITEONLY,
+								FVF_VERTEX_2D,			//頂点フォーマット
+								D3DPOOL_MANAGED,
+								&s_pVtxBuff,
+								NULL);
 
 	//タイトルの位置の設定
 	D3DXVECTOR3 pos = D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
