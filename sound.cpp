@@ -33,8 +33,8 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 // 各音素材のパラメータ
 SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 {
-	{"data/BGM/Thunderbolt.wav", -1},	// ゲーム中
-	{"data/BGM/基地出撃５分前.wav", -1},// タイトル
+	{"data/BGM/bgm006.wav", -1},	// ゲーム中
+	{"Swift Charge!!.wav", -1},// タイトル
 	{"data/BGM/勝利のテーマ.wav", -1 },	// リザルト
 	{"data/SE/shot000.wav", 0},			// 弾発射音
 	{"data/SE/explosion000.wav",0},		// 爆発音

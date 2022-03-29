@@ -337,6 +337,7 @@ void UpdateTitle(void)
 		}
 		if (!s_Title[nCnt].nSwitch)
 		{
+
 			if (nCnt == 2)
 			{
 				//頂点カラーの設定
@@ -344,6 +345,14 @@ void UpdateTitle(void)
 				pVtx[1].col = s_Title[nCnt].col;
 				pVtx[2].col = s_Title[nCnt].col;
 				pVtx[3].col = s_Title[nCnt].col;
+			}
+			else if(nCnt == 1)
+			{
+				//頂点カラーの設定
+				pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+				pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+				pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+				pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
 			}
 			else if (nCnt >= 3)
 			{
@@ -368,6 +377,14 @@ void UpdateTitle(void)
 			//頂点カラーの設定
 			if (nCnt == 2)
 			{
+				pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+				pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+				pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+				pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+			}
+			else if (nCnt == 1)
+			{
+				//頂点カラーの設定
 				pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
 				pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
 				pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
@@ -443,13 +460,7 @@ void DrawTitle(void)
 			2);							//プリミティブ(ポリゴン)数
 	}
 
-	//テクスチャの設定
-	pDevice->SetTexture(0, s_pTextureTitle[s_Title[nCnt].degree + nCnt]);
-
-	//ポリゴンの描画 四角
-	pDevice->DrawPrimitive(
-		D3DPT_TRIANGLESTRIP,		//プリミティブの種類
-		nCnt * 4, 2);			//描画する最初の頂点インデックス
+	
 
 
 }
