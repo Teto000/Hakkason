@@ -19,12 +19,13 @@
 #include "slingshot.h"
 #include "ball.h"
 #include"Time.h"
+#include "effect.h"
 //------------------------------
 // マクロ定義
 //------------------------------
 #define MAX_POP_TIME	(160 - s_Acceleration)		//敵の出現時間
 #define HALF_POP_TIME	(MAX_POP_TIME / 2)			//敵の出現時間の半分
-#define MAX_SPEED		(100)		//最高速度
+#define MAX_SPEED		(50)		//最高速度
 
 //------------------------
 // スタティック変数
@@ -59,6 +60,7 @@ void InitGame(void)
 	//ぱちんこの初期化
 	InitSlingshot();
 
+	InitEffect();
 	//サウンドの再生
 	//PlaySound(SOUND_LABEL_BGM000);
 }
@@ -85,6 +87,7 @@ void UninitGame(void)
 
 	//ぱちんこの終了
 	UninitSlingshot();
+	UninitEffect();
 }
 
 //========================
@@ -100,6 +103,8 @@ void UpdateGame(void)
 
 	//敵の更新処理
 	UpdateEnemy();
+
+	UpdateEffect();
 
 	if (s_nPopTime == HALF_POP_TIME)
 	{
@@ -146,7 +151,7 @@ void DrawGame(void)
 {
 	//背景の描画処理
 	DrawBG();
-
+	DrawEffect();
 	//敵の描画処理
 	DrawEnemy();
 
