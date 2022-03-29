@@ -138,7 +138,7 @@ void UpdateGame(void)
 		}
 	}
 
-	if (s_nPopTime == HALF_RAREPOP_TIME)
+	if (s_nRarePopTime == HALF_RAREPOP_TIME)
 	{
 		//“G‚Ìİ’èˆ—
 		SetEnemy(1);

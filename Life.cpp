@@ -144,7 +144,7 @@ void UpdateLife(void)
 							pEnemy->bUse = false;
 
 							//サウンド開始
-							PlaySound(SOUND_LABEL_SE_EXPLOSION);
+							//PlaySound(SOUND_LABEL_SE_EXPLOSION);
 
 							Flg = true;
 						}
