@@ -7,14 +7,20 @@
 #include "slingshot.h"
 #include "input.h"
 
+#define MAX_SIZE_Y (30.0f)
+#define MAX_SIZE_X (220.0f)
+
 static LPDIRECT3DTEXTURE9 s_pTextureSlingshotleft = NULL; //テクスチャのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuffSlingshotleft = NULL; //頂点バッファの設定
-
+static D3DXVECTOR3 s_posSlingshotleft; //左の初期位置
 static LPDIRECT3DTEXTURE9 s_pTextureSlingshotlight = NULL; //テクスチャのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuffSlingshotlight = NULL; //頂点バッファの設定
-
-static D3DXVECTOR3 s_posSlingshot; //スコアの位置
+static D3DXVECTOR3 s_posSlingshotlight; //右の初期位置
 static int s_nSlingshot, nCounterAnim, nPatternAnim;
+static D3DXVECTOR3 clickpoint;
+static D3DXVECTOR3 move;
+static D3DXVECTOR3 length;
+static bool press;
 
 
 //===================
@@ -22,16 +28,16 @@ static int s_nSlingshot, nCounterAnim, nPatternAnim;
 //===================
 void InitSlingshot(void)
 {
-
+	press = false;
 	LPDIRECT3DDEVICE9  pDevice;
-	//int nCntSlingshot;
+	clickpoint = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//s_nSlingshot = 0;
-	s_posSlingshot = D3DXVECTOR3(320.0f, 650.0f, 0.0f);
+	s_posSlingshotleft = D3DXVECTOR3(SCREEN_WIDTH/2-200.0f, 350.0f, 0.0f);
 	//デバイスの取得
 	pDevice = GetDevice();
 
 	D3DXCreateTextureFromFile(pDevice,
-		"Data/TEXTURE/pipo-gwspinitem007.png",
+		"Data/TEXTURE/asi.png",
 		&s_pTextureSlingshotleft);
 
 	//頂点バッファ
@@ -46,10 +52,10 @@ void InitSlingshot(void)
 					//頂点バッファをロックし頂点情報へのポインタを取得
 	s_pVtxBuffSlingshotleft->Lock(0, 0, (void**)&pVtx, 0);
 	//頂点座標
-	pVtx[0].pos = D3DXVECTOR3(s_posSlingshot.x - 20, s_posSlingshot.y - 20, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(s_posSlingshot.x + 20, s_posSlingshot.y - 20, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(s_posSlingshot.x - 20, s_posSlingshot.y + 20, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(s_posSlingshot.x + 20, s_posSlingshot.y + 20, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(s_posSlingshotleft.x - 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(s_posSlingshotleft.x + 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(s_posSlingshotleft.x - 20, s_posSlingshotleft.y + MAX_SIZE_Y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(s_posSlingshotleft.x + 20, s_posSlingshotleft.y + MAX_SIZE_Y, 0.0f);
 	
 	//RHWの設定
 	pVtx[0].rhw = 1.0f;
@@ -76,12 +82,12 @@ void InitSlingshot(void)
 	//---------------------
 	//みぎの設定
 	//---------------------
-	s_posSlingshot = D3DXVECTOR3(720.0f, 650.0f, 0.0f);
+	s_posSlingshotlight = D3DXVECTOR3(SCREEN_WIDTH / 2 + 200.0f, 350.0f, 0.0f);
 	
 	pDevice = GetDevice();
 
 	D3DXCreateTextureFromFile(pDevice,
-		"Data/TEXTURE/pipo-gwspinitem007.png",
+		"Data/TEXTURE/asi.png",
 		&s_pTextureSlingshotlight);
 
 	//頂点バッファ
@@ -93,13 +99,13 @@ void InitSlingshot(void)
 		NULL);
 
 	//VERTEX_2D*pVtx; //頂点へのポインタ
-					//頂点バッファをロックし頂点情報へのポインタを取得
+	//頂点バッファをロックし頂点情報へのポインタを取得
 	s_pVtxBuffSlingshotlight->Lock(0, 0, (void**)&pVtx, 0);
 	//頂点座標
-	pVtx[0].pos = D3DXVECTOR3(s_posSlingshot.x - 20, s_posSlingshot.y - 20, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(s_posSlingshot.x + 20, s_posSlingshot.y - 20, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(s_posSlingshot.x - 20, s_posSlingshot.y + 20, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(s_posSlingshot.x + 20, s_posSlingshot.y + 20, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(s_posSlingshotlight.x - 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(s_posSlingshotlight.x + 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(s_posSlingshotlight.x - 20, s_posSlingshotlight.y + MAX_SIZE_Y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(s_posSlingshotlight.x + 20, s_posSlingshotlight.y + MAX_SIZE_Y, 0.0f);
 	
 	//RHWの設定
 	pVtx[0].rhw = 1.0f;
@@ -122,7 +128,6 @@ void InitSlingshot(void)
 	//頂点バッファをアンロック
 	s_pVtxBuffSlingshotlight->Unlock();
 
-	
 
 }
 
@@ -167,26 +172,92 @@ void UninitSlingshot(void)
 //===================
 void UpdateSlingshot(void)
 {
+
 	if (GetMousePress(MOUSE_INPUT_LEFT))
 	{
+		press = true;
+		length = GetMouse();	
 
+		VERTEX_2D*pVtx; //頂点へのポインタ
+						//頂点バッファをロックし頂点情報へのポインタを取得
+		s_pVtxBuffSlingshotleft->Lock(0, 0, (void**)&pVtx, 0);
+
+		if (length.y < s_posSlingshotleft.y - MAX_SIZE_Y)
+		{
+			//頂点座標
+			pVtx[0].pos = D3DXVECTOR3(length.x - 20, length.y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(length.x + 20, length.y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(s_posSlingshotleft.x - 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(s_posSlingshotleft.x + 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+		}
+		else
+		{
+			//頂点座標
+			pVtx[0].pos = D3DXVECTOR3(s_posSlingshotleft.x - 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(s_posSlingshotleft.x + 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(length.x	- 20 , length.y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3( length.x + 20 , length.y, 0.0f);
+		}
+		//頂点バッファをアンロック
+		s_pVtxBuffSlingshotleft->Unlock();
+
+		//頂点バッファをロックし頂点情報へのポインタを取得
+		s_pVtxBuffSlingshotlight->Lock(0, 0, (void**)&pVtx, 0);
+
+
+		if (length.y < s_posSlingshotlight.y - MAX_SIZE_Y)
+		{
+			pVtx[0].pos = D3DXVECTOR3(length.x - 20, length.y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(length.x + 20, length.y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(s_posSlingshotlight.x - 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(s_posSlingshotlight.x + 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+		}
+		else
+		{		//頂点座標
+			pVtx[0].pos = D3DXVECTOR3(s_posSlingshotlight.x - 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(s_posSlingshotlight.x + 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(length.x - 20, length.y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(length.x + 20, length.y, 0.0f);
+		}
+		//頂点バッファをアンロック
+		s_pVtxBuffSlingshotlight->Unlock();
+	
+	}
+	else if (press)
+	{
+		move = clickpoint - length;
+		press = false;
+	}
+	else
+	{
+		VERTEX_2D*pVtx; //頂点へのポインタ
+		//頂点バッファをロックし頂点情報へのポインタを取得
+		s_pVtxBuffSlingshotleft->Lock(0, 0, (void**)&pVtx, 0);
+		//頂点座標
+		pVtx[0].pos = D3DXVECTOR3(s_posSlingshotleft.x - 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(s_posSlingshotleft.x + 20, s_posSlingshotleft.y - MAX_SIZE_Y, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(s_posSlingshotleft.x + MAX_SIZE_X - 40.0f, s_posSlingshotleft.y + MAX_SIZE_Y*2, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(s_posSlingshotleft.x + MAX_SIZE_X, s_posSlingshotleft.y + MAX_SIZE_Y*2, 0.0f);
+
+
+		//頂点バッファをアンロック
+		s_pVtxBuffSlingshotleft->Unlock();
+
+		//頂点バッファをロックし頂点情報へのポインタを取得
+		s_pVtxBuffSlingshotlight->Lock(0, 0, (void**)&pVtx, 0);
+		//頂点座標
+		pVtx[0].pos = D3DXVECTOR3(s_posSlingshotlight.x - 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(s_posSlingshotlight.x + 20, s_posSlingshotlight.y - MAX_SIZE_Y, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(s_posSlingshotlight.x - MAX_SIZE_X, s_posSlingshotlight.y + MAX_SIZE_Y*2, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(s_posSlingshotlight.x - MAX_SIZE_X+40.0f, s_posSlingshotlight.y + MAX_SIZE_Y * 2, 0.0f);
+
+		//頂点バッファをアンロック
+		s_pVtxBuffSlingshotlight->Unlock();
 	}
 	if (GetMouseTrigger(MOUSE_INPUT_LEFT))
 	{
-
+		clickpoint = GetMouse();
 	}
-
-	VERTEX_2D*pVtx; //頂点へのポインタ
-					//頂点バッファをロックし頂点情報へのポインタを取得
-	s_pVtxBuffSlingshotleft->Lock(0, 0, (void**)&pVtx, 0);
-	//頂点座標
-	pVtx[0].pos = D3DXVECTOR3(s_posSlingshot.x - 20, s_posSlingshot.y - 20, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(s_posSlingshot.x + 20, s_posSlingshot.y - 20, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(s_posSlingshot.x - 20, s_posSlingshot.y + 20, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(s_posSlingshot.x + 20, s_posSlingshot.y + 20, 0.0f);
-
-	//頂点バッファをアンロック
-	s_pVtxBuffSlingshotleft->Unlock();
 }
 
 //===================

@@ -18,6 +18,9 @@
 typedef struct
 {
 	D3DXVECTOR3 pos;	//位置
+	D3DXVECTOR3 move;	//移動量
+	D3DXVECTOR3 rot;	//向き
+	int nPlace;			//出現位置
 	float fWidth;		//幅
 	float fHeight;		//高さ
 	bool bUse;			//使用しているか
@@ -31,5 +34,6 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 void SetEnemy(void);
+Enemy GetEnemy(void);
 
 #endif
