@@ -2,6 +2,7 @@
 // ƒCƒ“ƒNƒ‹[ƒh
 #include "Life.h"
 #include "enemy.h"
+#include"particle.h"
 
 #define KINDS (1)	//ƒeƒNƒXƒ`ƒƒŽí—Þ
 
@@ -13,6 +14,8 @@ static LPDIRECT3DVERTEXBUFFER9 s_PvtxBuffLife = NULL;				//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ
 static Life s_Life[MAX_Life];
 
 
+static bool Flg;
+static int timer;
 
 void InitLife(void)
 {
@@ -40,7 +43,10 @@ void InitLife(void)
 		s_Life[Cnt].col = D3DXCOLOR (0.0f, 0.0f, 0.0f,0.0f);
 
 		int nLife = 1;					//‘Ì—Í
-		bool bUse = false;					//Žg—p‚µ‚Ä‚é‚©‚Ç‚¤‚©	
+		bool bUse = false;					//Žg—p‚µ‚Ä‚é‚©‚Ç‚¤‚©
+
+		Flg = false;
+		timer = 0;
 	}
 
 	VERTEX_2D*pVtx;
@@ -104,7 +110,19 @@ void UninitLife(void)
 }
 void UpdateLife(void)
 {
+	Life *pLife = GetLife();
+	if (Flg)
+	{
+		timer++;
 
+		SetParticle(D3DXVECTOR3(pLife->pos.x, pLife->pos.y, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 50, 500, 0);
+
+		if (timer >= 30)
+		{
+			Flg = false;
+			timer = 0;
+		}
+	}
 	for (int nCnt = 0; nCnt < MAX_Life; nCnt++)
 	{
 		if (s_Life[nCnt].bUse)
@@ -119,6 +137,8 @@ void UpdateLife(void)
 						{//’eÀ•Wd‚È‚è
 							HitLife(1, nCnt);
 							pEnemy->bUse = false;
+
+							Flg = true;
 						}
 					
 			}

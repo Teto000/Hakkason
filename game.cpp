@@ -22,6 +22,7 @@
 #include "effect.h"
 #include "combo.h"
 #include "right.h"
+#include"particle.h"
 //------------------------------
 // ƒ}ƒNƒ’è‹`
 //------------------------------
@@ -57,6 +58,8 @@ void InitGame(void)
 
 	InitScore();
 
+	InitParticle();
+
 	InitCombo();
 
 	//‹Ê‰Šú‰»
@@ -83,6 +86,8 @@ void UninitGame(void)
 	UninitRight();
 
 	UninitLife();
+
+	UninitParticle();
 
 	UninitTimer();
 
@@ -115,6 +120,7 @@ void UpdateGame(void)
 
 	UpdateEffect();
 
+	UpdateParticle();
 
 	UpdateCombo();
 
@@ -168,6 +174,8 @@ void DrawGame(void)
 	DrawEffect();
 	//“G‚Ì•`‰æˆ—
 	DrawEnemy();
+
+	DrawParticle();
 
 	DrawCombo();
 
