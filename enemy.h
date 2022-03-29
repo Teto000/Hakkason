@@ -19,6 +19,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;	//ˆÊ’u
 	D3DXVECTOR3 move;	//ˆÚ“®—Ê
+	D3DXVECTOR3 rot;	//Œü‚«
 	int nPlace;			//oŒ»ˆÊ’u
 	float fWidth;		//•
 	float fHeight;		//‚‚³
@@ -33,5 +34,6 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 void SetEnemy(void);
+Enemy *GetEnemy(void);
 
 #endif

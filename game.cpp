@@ -15,6 +15,7 @@
 #include "bg.h"
 #include "enemy.h"
 #include "score.h"
+#include "Life.h"
 #include "slingshot.h"
 
 //------------------------------
@@ -41,6 +42,11 @@ void InitGame(void)
 	//“G‚Ì‰Šú‰»ˆ—
 	InitEnemy();
 
+	//“G‚Ìİ’èˆ—
+	SetEnemy();
+
+	InitLife();
+
 	InitScore();
 
 	//‚Ï‚¿‚ñ‚±‚Ì‰Šú‰»
@@ -60,6 +66,8 @@ void UninitGame(void)
 
 	//”wŒi‚ÌI—¹ˆ—
 	UninitBG();
+
+	//UninitLife();
 
 	UninitScore();
 
@@ -89,6 +97,8 @@ void UpdateGame(void)
 		s_Acceleration++;	//‰Á‘¬“x‚Ìã¸
 	}
 
+	UpdateLife();
+
 	UpdateScore();
 
 	//‚Ï‚¿‚ñ‚±‚ÌXV
@@ -112,6 +122,8 @@ void DrawGame(void)
 
 	//“G‚Ì•`‰æˆ—
 	DrawEnemy();
+
+	DrawLife();
 
 	DrawScore();
 
