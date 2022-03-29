@@ -177,13 +177,19 @@ void UpdateEnemy(void)
 		if (enemy->bUse == true)
 		{//敵が使用されているなら
 
-		 //------------------------
-		 // 敵の進行方向の回転
-		 //------------------------
-			fAngle += ADD_ANGLE;
+			if (enemy->nType == 0)
+			{//風船
+				//------------------------
+				// 敵の進行方向の回転
+				//------------------------
+				fAngle += ADD_ANGLE;
 
-			enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f) * 3.0f;
-
+				enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f) * 3.0f;
+			}
+			else if (enemy->nType == 1)
+			{//ごん
+				enemy->pos.x -= 2.0f;
+			}
 
 			//------------------------
 			// 画面端の処理
@@ -281,11 +287,20 @@ void SetEnemy(int nType)
 
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
-			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
-			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
+			enemy->nType = nType;
+
+			if (enemy->nType == 0)
+			{
+				enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
+				enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
+			}
+			else if (enemy->nType == 1)
+			{
+				enemy->pos = D3DXVECTOR3(1000.0f,0.0f - HEIGHT, 0.0f);		//位置
+				enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED * 1.5f, 0.0f);	//移動量
+			}
 			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//向き
 			enemy->bUse = true;		//使用しているか
-			enemy->nType = nType;
 
 			//頂点座標の設定
 			pVtx[0].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;

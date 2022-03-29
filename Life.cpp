@@ -121,19 +121,18 @@ void UpdateLife(void)
 			for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 			{
 						Enemy *pEnemy = GetEnemy(nCntEnemy);
-						if (pEnemy->bUse)
-						{
-							if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
-								&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
-								&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
-								&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
-							{//弾座標重なり
-								HitLife(1, nCnt);
-								pEnemy->bUse = false;
-								SetParticle(D3DXVECTOR3(s_Life[nCnt].pos.x, s_Life[nCnt].pos.y, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 50, 50, 0);
-								//サウンド開始
-								PlaySound(SOUND_LABEL_SE_EXPLOSION);
-							}
+						if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
+							&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
+							&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
+							&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
+						{//弾座標重なり
+							HitLife(1, nCnt);
+							pEnemy->bUse = false;
+
+							//サウンド開始
+							//PlaySound(SOUND_LABEL_SE_EXPLOSION);
+
+							Flg = true;
 						}
 						
 			}
