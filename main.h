@@ -36,6 +36,8 @@ typedef enum
 	MODE_RESULT,		//リザルト画面
 	MODE_FADE,			//フェード画面
 	MODE_RANKING,		//ランキング画面
+	MODE_GAMEOVER,
+	MODE_TUTORIAL,
 	MODE_MAX
 }MODE;
 
