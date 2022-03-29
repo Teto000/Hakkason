@@ -11,6 +11,7 @@
 #include "enemy.h"
 #include "score.h"
 #include "effect.h"
+#include "combo.h"
 
 #define	NUR_BALL	(1)
 
@@ -186,8 +187,8 @@ void UpdateBall(void)
 						&& g_aBall[nCntBall].pos.y + g_aBall[nCntBall].fSiz >= pEnemy->pos.y- HEIGHT
 						&& g_aBall[nCntBall].pos.y - g_aBall[nCntBall].fSiz <= pEnemy->pos.y+ HEIGHT)
 					{//弾座標重なり
-				
 							g_aBall[nCntBall].kill++;
+							SetCombo(pEnemy->pos, 150, 0, 50, g_aBall[nCntBall].kill);
 							AddScore(10 * g_aBall[nCntBall].kill);
 							pEnemy->bUse = false;
 							// エフェクトの設定

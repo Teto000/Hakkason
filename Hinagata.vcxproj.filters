@@ -18,6 +18,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="effect.cpp" />
+    <ClCompile Include="combo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ball.h" />
@@ -37,5 +38,6 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="effect.h" />
+    <ClInclude Include="combo.h" />
   </ItemGroup>
 </Project>

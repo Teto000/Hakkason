@@ -20,6 +20,7 @@
 #include "ball.h"
 #include"Time.h"
 #include "effect.h"
+#include "combo.h"
 //------------------------------
 // マクロ定義
 //------------------------------
@@ -54,6 +55,8 @@ void InitGame(void)
 
 	InitScore();
 
+	InitCombo();
+
 	//玉初期化
 	InitBall();
 
@@ -85,6 +88,8 @@ void UninitGame(void)
 	//玉終了
 	UninitBall();
 
+	UninitCombo();
+
 	//ぱちんこの終了
 	UninitSlingshot();
 	UninitEffect();
@@ -105,6 +110,9 @@ void UpdateGame(void)
 	UpdateEnemy();
 
 	UpdateEffect();
+
+
+	UpdateCombo();
 
 	if (s_nPopTime == HALF_POP_TIME)
 	{
@@ -154,6 +162,8 @@ void DrawGame(void)
 	DrawEffect();
 	//敵の描画処理
 	DrawEnemy();
+
+	DrawCombo();
 
 	DrawLife();
 
