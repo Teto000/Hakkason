@@ -293,7 +293,7 @@ void UpdateTitle(void)
 
 				{//SPACE‚ð‰Ÿ‚³‚ê‚½‚Æ‚«
 				 //PlaySound(SOUND_LABEL_SE_ENTER);
-					//SetFade(MODE_TUTORIAL);
+					SetFade(MODE_TUTORIAL);
 
 				}
 				break;
@@ -301,7 +301,7 @@ void UpdateTitle(void)
 
 				{ //SPACE‚ð‰Ÿ‚³‚ê‚½‚Æ‚«
 				  //PlaySound(SOUND_LABEL_SE_ENTER);
-					//SetFade(MODE_RANKING);
+					SetFade(MODE_RANKING);
 				}
 				break;
 				}
