@@ -14,6 +14,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "texture.h"
+#include "Life.h"
 
 #include <stdlib.h>
 #include <time.h>
@@ -22,9 +23,10 @@
 // マクロ定義
 //------------------------
 #define	MAX_ENEMY	(256)	//敵の最大数
-#define FALL_SPEED	(0.75f)	//落下速度
+#define FALL_SPEED	(2.0f)	//落下速度
 #define WIDTH	(60.0f)		//幅
 #define HEIGHT	(100.0f)	//高さ
+#define MAX_VECTOR	(4)		//ベクトルの最大数
 
 //------------------------
 // スタティック変数
@@ -38,7 +40,9 @@ static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
 //値
 static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));	//対角線の長さを算出する
 static float s_fAngle = atan2f(WIDTH, HEIGHT);		//対角線の角度を算出
-static D3DXVECTOR3 vecEnemy;	//プレイヤーとエネミー間のベクトル
+static D3DXVECTOR3 vecEnemy[MAX_VECTOR];	//プレイヤーとエネミー間のベクトル
+static int s_nNumber;	//一番近い番号
+static int s_nMin;		//最小
 
 //========================
 // 敵の初期化処理
@@ -77,6 +81,7 @@ void InitEnemy(void)
 		enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 		enemy->nPlace = 0;		//出現場所
 		enemy->bUse = false;	//使用しているか
+		enemy->bHorming = false;
 	}
 
 	//------------------------
@@ -89,8 +94,8 @@ void InitEnemy(void)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
 
-		int nMax = (int)(SCREEN_WIDTH - WIDTH);	//最大値
-		int nMin = (int)(WIDTH);				//最小値
+		int nMax = (int)(SCREEN_WIDTH - (WIDTH * 2));	//最大値
+		int nMin = (int)(WIDTH * 2);					//最小値
 
 		enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
 	}
@@ -173,6 +178,8 @@ void UpdateEnemy(void)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	s_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
+	Life *pLife = GetLife();	//ライフ情報の取得
+
 	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
@@ -183,11 +190,29 @@ void UpdateEnemy(void)
 			//------------------------
 			// 敵の進行方向の回転
 			//------------------------
-			//vecEnemy = pPlayer->pos - enemy->pos;	//距離を求める
+			if (enemy->pos.y >= 200.0f)
+			{
+				for (int i = 0; i < MAX_VECTOR; i++)
+				{
+					s_nNumber = FindDistance();
+				}
 
-			//D3DXVec3Normalize(&vecEnemy, &vecEnemy);	//vecPlayerを1にする
+				if (enemy->bHorming == false)
+				{
+					float moveEnemyX = pLife[s_nNumber].pos.x - enemy->pos.x;
+					float moveEnemyY = pLife[s_nNumber].pos.y - enemy->pos.y;
+					float moveEnemyR = sqrtf(moveEnemyX * moveEnemyX + moveEnemyY * moveEnemyY);
 
-			//enemy->pos += vecEnemy * FALL_SPEED;		//プレイヤーに向かって移動
+					enemy->move.x = (moveEnemyX / moveEnemyR) * 3.0f;
+					enemy->move.y = (moveEnemyY / moveEnemyR) * 3.0f;
+				}
+
+				if (enemy->pos.y >= pLife[s_nNumber].pos.y)
+				{
+					enemy->bHorming = true;
+					enemy->move.y = FALL_SPEED;
+				}
+			}
 
 			//------------------------
 			// 画面端の処理
@@ -283,8 +308,8 @@ void SetEnemy(void)
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
-			enemy->move = D3DXVECTOR3(3.0f, 0.0f, 0.0f);	//移動量
-			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
+			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
+			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);	//向き
 			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
@@ -317,6 +342,45 @@ void SetEnemy(void)
 
 	//頂点バッファをアンロックする
 	s_pVtxBuff->Unlock();
+}
+
+//===========================
+// 敵とライフの距離を求める
+//===========================
+int FindDistance(void)
+{
+	Life *pLife = GetLife();	//ライフ情報の取得
+
+	if (pLife[0].bUse == true)
+	{//0番目が生きているなら
+		if (pLife[0].pos.x < pLife[1].pos.x && pLife[0].pos.x < pLife[2].pos.x && pLife[0].pos.x < pLife[3].pos.x)
+		{//0が一番小さい
+			s_nMin = 0;
+		}
+	}
+	if (pLife[1].bUse == true)
+	{//1番目が生きているなら
+		if (pLife[1].pos.x < pLife[0].pos.x && pLife[1].pos.x < pLife[2].pos.x && pLife[1].pos.x < pLife[3].pos.x)
+		{//1が一番小さい
+			s_nMin = 1;
+		}
+	}
+	if (pLife[2].bUse == true)
+	{//2番目が生きているなら
+		if (pLife[2].pos.x < pLife[0].pos.x && pLife[2].pos.x < pLife[1].pos.x && pLife[2].pos.x < pLife[3].pos.x)
+		{//2が一番小さい
+			s_nMin = 2;
+		}
+	}
+	if (pLife[3].bUse == true)
+	{//3番目が生きているなら
+		if (pLife[3].pos.x < pLife[0].pos.x && pLife[3].pos.x < pLife[1].pos.x && pLife[3].pos.x < pLife[2].pos.x)
+		{//3が一番小さい
+			s_nMin = 3;
+		}
+	}
+
+	return s_nMin;	//一番近い値を返す
 }
 
 //========================

@@ -118,6 +118,7 @@ void UpdateLife(void)
 							&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
 						{//’eÀ•Wd‚È‚è
 							HitLife(1, nCnt);
+							pEnemy->bUse = false;
 						}
 					
 			}

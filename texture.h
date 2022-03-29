@@ -14,6 +14,7 @@ typedef enum
 {
 	//タイトル画面
 	TEXTURE_TITLE_BG,		// タイトル画面の背景
+	TEXTURE_TITLE_LOGO,		// タイトルロゴ
 
 	//ゲーム画面
 	TEXTURE_GAME_BG,		// ゲーム画面の背景

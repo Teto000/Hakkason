@@ -38,11 +38,11 @@ void InitTitle(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data/TEXTURE/タイトル.jpg",
+		"data\\TEXTURE\\TITLE\\Title_BG.png",
 		&s_pTextureTitle[0]);
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data/TEXTURE/title.png",
+		"data\\TEXTURE\\TITLE\\Title_Logo.png",
 		&s_pTextureTitle[1]);
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
