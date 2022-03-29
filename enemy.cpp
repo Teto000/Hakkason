@@ -32,9 +32,7 @@ static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
 //値
 static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));	//対角線の長さを算出する
 static float s_fAngle = atan2f(WIDTH, HEIGHT);		//対角線の角度を算出
-static D3DXVECTOR3 vecEnemy[MAX_VECTOR];	//プレイヤーとエネミー間のベクトル
-static int s_nNumber;	//一番近い番号
-static int s_nMin;		//最小
+static float fAngle;	//角度
 
 //========================
 // 敵の初期化処理
@@ -73,7 +71,6 @@ void InitEnemy(void)
 		enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 		enemy->nPlace = 0;		//出現場所
 		enemy->bUse = false;	//使用しているか
-		enemy->bHorming = false;
 	}
 
 	//------------------------
@@ -182,9 +179,10 @@ void UpdateEnemy(void)
 			//------------------------
 			// 敵の進行方向の回転
 			//------------------------
-			if (enemy->pos.y >= 200.0f)
-			{
-			}
+			fAngle += ADD_ANGLE;
+
+			enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f) * 3.0f;
+			
 
 			//------------------------
 			// 画面端の処理
@@ -281,7 +279,7 @@ void SetEnemy(void)
 		{//敵が使用されていないなら
 			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
-			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
+			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
@@ -315,7 +313,6 @@ void SetEnemy(void)
 	//頂点バッファをアンロックする
 	s_pVtxBuff->Unlock();
 }
-
 
 //========================
 // 敵情報の取得

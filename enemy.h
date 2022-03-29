@@ -18,24 +18,20 @@
 typedef struct
 {
 	D3DXVECTOR3 pos;	//位置
-	D3DXVECTOR3 posMax;	//最大
-	D3DXVECTOR3 posMin;	//最小
-	D3DXVECTOR3 size;	//大きさ
 	D3DXVECTOR3 move;	//移動量
 	D3DXVECTOR3 rot;	//向き
 	int nPlace;			//出現位置
 	bool bUse;			//使用しているか
-	bool bHorming;
 }Enemy;
 
 //------------------------
 // マクロ定義
 //------------------------
-#define	MAX_ENEMY	(256)	//敵の最大数
+#define	MAX_ENEMY	(128)	//敵の最大数
 #define FALL_SPEED	(0.75f)	//落下速度
 #define WIDTH	(60.0f)		//幅
 #define HEIGHT	(100.0f)	//高さ
-#define MAX_VECTOR (4)
+#define ADD_ANGLE (0.005f)	//角度の加算値
 
 //------------------------
 // プロトタイプ宣言
@@ -45,7 +41,6 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 void SetEnemy(void);
-//int FindDistance(void);
 Enemy *GetEnemy(int a);
 
 #endif
