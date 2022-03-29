@@ -21,8 +21,9 @@
 //------------------------------
 // マクロ定義
 //------------------------------
-#define MAX_POP_TIME	(160 - s_Acceleration)				//敵の出現時間
-#define HALF_POP_TIME	(MAX_POP_TIME / 2)	//敵の出現時間の半分
+#define MAX_POP_TIME	(160 - s_Acceleration)		//敵の出現時間
+#define HALF_POP_TIME	(MAX_POP_TIME / 2)			//敵の出現時間の半分
+#define MAX_SPEED		(100)		//最高速度
 
 //------------------------
 // スタティック変数
@@ -94,7 +95,10 @@ void UpdateGame(void)
 		//敵の設定処理
 		SetEnemy();
 
-		s_Acceleration++;	//加速度の上昇
+		if (s_Acceleration <= MAX_SPEED)
+		{//最高速度じゃないなら
+			s_Acceleration++;	//加速度の上昇
+		}
 	}
 
 	UpdateLife();

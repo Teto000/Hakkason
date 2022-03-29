@@ -22,7 +22,9 @@
 // マクロ定義
 //------------------------
 #define	MAX_ENEMY	(256)	//敵の最大数
-#define FALL_SPEED	(1.0f)	//落下速度
+#define FALL_SPEED	(0.75f)	//落下速度
+#define WIDTH	(60.0f)		//幅
+#define HEIGHT	(100.0f)	//高さ
 
 //------------------------
 // スタティック変数
@@ -34,7 +36,11 @@ static	LPDIRECT3DVERTEXBUFFER9		s_pVtxBuff = NULL;		//頂点バッファへのポインタ
 static	Enemy s_Enemy[MAX_ENEMY];	//敵の構造体
 
 //値
-static float fAngle;	//回転角度
+//対角線の長さを算出する
+static float s_fLength = sqrtf((WIDTH * WIDTH) + (HEIGHT * HEIGHT));
+
+//対角線の角度を算出
+static float s_fAngle = atan2f(WIDTH, HEIGHT);
 
 //========================
 // 敵の初期化処理
@@ -72,8 +78,6 @@ void InitEnemy(void)
 		enemy->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動量
 		enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向き
 		enemy->nPlace = 0;		//出現場所
-		enemy->fWidth = 0.0f;	//幅
-		enemy->fHeight = 0.0f;	//高さ
 		enemy->bUse = false;	//使用しているか
 	}
 
@@ -87,8 +91,8 @@ void InitEnemy(void)
 	{
 		Enemy *enemy = s_Enemy + nCnt;
 
-		int nMax = (int)(SCREEN_WIDTH - enemy->fWidth);	//最大値
-		int nMin = (int)(enemy->fWidth);				//最小値
+		int nMax = (int)(SCREEN_WIDTH - WIDTH);	//最大値
+		int nMin = (int)(WIDTH);				//最小値
 
 		enemy->nPlace = rand() % nMax + nMin;	//敵の出現場所の設定
 	}
@@ -98,11 +102,24 @@ void InitEnemy(void)
 	//------------------------
 	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
 	{
+		Enemy *enemy = s_Enemy + nCnt;
+
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[0].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;
+		pVtx[0].pos.y = enemy->pos.y + cosf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;
+		pVtx[0].pos.z = 0.0f;
+
+		pVtx[1].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI - s_fAngle)) * s_fLength;
+		pVtx[1].pos.y = enemy->pos.y + cosf(enemy->rot.z + (D3DX_PI - s_fAngle)) * s_fLength;
+		pVtx[1].pos.z = 0.0f;
+
+		pVtx[2].pos.x = enemy->pos.x + sinf(enemy->rot.z - (0 + s_fAngle)) * s_fLength;
+		pVtx[2].pos.y = enemy->pos.y + cosf(enemy->rot.z - (0 + s_fAngle)) * s_fLength;
+		pVtx[2].pos.z = 0.0f;
+
+		pVtx[3].pos.x = enemy->pos.x + sinf(enemy->rot.z - (0 - s_fAngle)) * s_fLength;
+		pVtx[3].pos.y = enemy->pos.y + cosf(enemy->rot.z - (0 - s_fAngle)) * s_fLength;
+		pVtx[3].pos.z = 0.0f;
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -166,30 +183,43 @@ void UpdateEnemy(void)
 		{//敵が使用されているなら
 
 			//------------------------
-			// 敵の向きの回転
+			// 敵の進行方向の回転
 			//------------------------
-			////角度の加算
-			//fAngle += 0.005f;
-
-			////敵の動きを曲げる
-			//enemy->pos.x += sinf(fAngle + D3DX_PI * 0.5f);
+			//enemy->pos.y += sinf(D3DX_PI * s_fAngle) * 2.0f;
 
 			//------------------------
 			// 画面端の処理
 			//------------------------
-			if (enemy->pos.y - enemy->fHeight >= 700.0f)
+			if (enemy->pos.y - HEIGHT >= 700.0f)
 			{//敵が地面の下に行った
 				enemy->bUse = false;	//敵を消す
 			}
 
 			//位置の更新
-			enemy->pos += enemy->move;
+			enemy->pos += enemy->move * sinf(enemy->rot.z + (D3DX_PI + s_fAngle));
 
 			//頂点座標の設定
-			pVtx[0].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, -enemy->fHeight, 0.0f);
-			pVtx[1].pos = enemy->pos + D3DXVECTOR3(enemy->fWidth, -enemy->fHeight, 0.0f);
-			pVtx[2].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, enemy->fHeight, 0.0f);
-			pVtx[3].pos = enemy->pos + D3DXVECTOR3(enemy->fWidth, enemy->fHeight, 0.0f);
+			pVtx[0].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;
+			pVtx[0].pos.y = enemy->pos.y + cosf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;
+			pVtx[0].pos.z = 0.0f;
+
+			pVtx[1].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI - s_fAngle)) * s_fLength;
+			pVtx[1].pos.y = enemy->pos.y + cosf(enemy->rot.z + (D3DX_PI - s_fAngle)) * s_fLength;
+			pVtx[1].pos.z = 0.0f;
+
+			pVtx[2].pos.x = enemy->pos.x + sinf(enemy->rot.z - (0 + s_fAngle)) * s_fLength;
+			pVtx[2].pos.y = enemy->pos.y + cosf(enemy->rot.z - (0 + s_fAngle)) * s_fLength;
+			pVtx[2].pos.z = 0.0f;
+
+			pVtx[3].pos.x = enemy->pos.x + sinf(enemy->rot.z - (0 - s_fAngle)) * s_fLength;
+			pVtx[3].pos.y = enemy->pos.y + cosf(enemy->rot.z - (0 - s_fAngle)) * s_fLength;
+			pVtx[3].pos.z = 0.0f;
+
+			//テクスチャ座標の設定
+			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+			pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+			pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+			pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 		}
 
 		pVtx += 4;
@@ -248,18 +278,34 @@ void SetEnemy(void)
 
 		if (enemy->bUse == false)
 		{//敵が使用されていないなら
-			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - enemy->fHeight, 0.0f);		//位置
+			//enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 0.0f - HEIGHT, 0.0f);		//位置
+			enemy->pos = D3DXVECTOR3((float)enemy->nPlace, 300.0f, 0.0f);		//位置
+			enemy->rot = D3DXVECTOR3(0.0f, 0.0f, 45.0f);		//向き
 			enemy->move = D3DXVECTOR3(0.0f, FALL_SPEED, 0.0f);	//移動量
-			enemy->rot = D3DXVECTOR3(45.0f, 45.0f, 0.0f);		//向き
-			enemy->fWidth = 60.0f;		//幅
-			enemy->fHeight = 100.0f;	//高さ
 			enemy->bUse = true;			//使用しているか
 
 			//頂点座標の設定
-			pVtx[0].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, -enemy->fHeight, 0.0f);
-			pVtx[1].pos = enemy->pos + D3DXVECTOR3(enemy->fWidth, -enemy->fHeight, 0.0f);
-			pVtx[2].pos = enemy->pos + D3DXVECTOR3(-enemy->fWidth, enemy->fHeight, 0.0f);
-			pVtx[3].pos = enemy->pos + D3DXVECTOR3(enemy->fWidth, enemy->fHeight, 0.0f);
+			pVtx[0].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;
+			pVtx[0].pos.y = enemy->pos.y + cosf(enemy->rot.z + (D3DX_PI + s_fAngle)) * s_fLength;
+			pVtx[0].pos.z = 0.0f;
+
+			pVtx[1].pos.x = enemy->pos.x + sinf(enemy->rot.z + (D3DX_PI - s_fAngle)) * s_fLength;
+			pVtx[1].pos.y = enemy->pos.y + cosf(enemy->rot.z + (D3DX_PI - s_fAngle)) * s_fLength;
+			pVtx[1].pos.z = 0.0f;
+
+			pVtx[2].pos.x = enemy->pos.x + sinf(enemy->rot.z - (0 + s_fAngle)) * s_fLength;
+			pVtx[2].pos.y = enemy->pos.y + cosf(enemy->rot.z - (0 + s_fAngle)) * s_fLength;
+			pVtx[2].pos.z = 0.0f;
+
+			pVtx[3].pos.x = enemy->pos.x + sinf(enemy->rot.z - (0 - s_fAngle)) * s_fLength;
+			pVtx[3].pos.y = enemy->pos.y + cosf(enemy->rot.z - (0 - s_fAngle)) * s_fLength;
+			pVtx[3].pos.z = 0.0f;
+
+			//テクスチャ座標の設定
+			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+			pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+			pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+			pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 			break;
 		}

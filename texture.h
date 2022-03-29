@@ -13,16 +13,19 @@
 typedef enum
 {
 	//タイトル画面
-	TEXTURE_TITLE_BG,	// タイトル画面の背景
+	TEXTURE_TITLE_BG,		// タイトル画面の背景
 
 	//ゲーム画面
-	TEXTURE_GAME_BG,	// ゲーム画面の背景
-	TEXTURE_BOM,		//爆弾
-	TEXTURE_BALLOONBOM,	//風船付き爆弾
-	TEXTURE_FLOWER,		//花
+	TEXTURE_GAME_BG,		// ゲーム画面の背景
+	TEXTURE_BOM,			//爆弾
+	TEXTURE_BALLOONBOM,		//風船付き爆弾
+	TEXTURE_FLOWER,			//花
+	TEXTURE_FOX_UFO,		//UFO in きつね
+	TEXTURE_LIGHT_BRIGHT,	//明るい街灯
+	TEXTURE_LIGHT_DARK,		//暗い街灯
 
 	//リザルト画面
-	TEXTURE_RESULT_BG,	// リザルト画面の背景
+	TEXTURE_RESULT_BG,		// リザルト画面の背景
 
 	TEXTURE_MAX,
 	TEXTURE_NONE,

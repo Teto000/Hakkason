@@ -28,6 +28,9 @@ const char *s_FileName[] =
 	"data\\TEXTURE\\GAME\\Bom.png",				//”š’e
 	"data\\TEXTURE\\GAME\\BalloonBom.png",		//•—‘D•t‚«”š’e
 	"data\\TEXTURE\\GAME\\Flower.png",			//‰Ô
+	"data\\TEXTURE\\GAME\\Fox_UFO.png",			//UFO in ‚«‚Â‚Ë
+	"data\\TEXTURE\\GAME\\Light_Bright.png",	//–¾‚é‚¢ŠX“”
+	"data\\TEXTURE\\GAME\\Light_Dark.png",		//ˆÃ‚¢ŠX“”
 
 	//ƒŠƒUƒ‹ƒg‰æ–Ê
 	"data\\TEXTURE\\RESULT\\Result_BG.png",		//ƒŠƒUƒ‹ƒg‚Ì”wŒi
