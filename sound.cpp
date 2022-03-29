@@ -39,8 +39,9 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{"data/BGM/gameovera.wav", -1 },	// げーむまけ
 	{"data/BGM/bgm002.wav", -1 },	// げーむチュートリアル
 	{"data/SE/風魔法1.wav", 0},			// 弾発射音
-	{"data/SE/火炎魔法3.wav",0},		// 爆発音
-	{"data/SE/決定、ボタン押下13.wav",0 },		// 決定音
+	{"data/SE/ガラスが割れる1.wav",0},		// 爆発音
+	{"data/SE/食べ物をパクッ.wav",0 },		// 決定音
+	{ "data/SE/explosion000.wav",0 },		// 敵の爆発
 };
 
 //=============================================================================
