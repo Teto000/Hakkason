@@ -22,5 +22,7 @@ void UninitLife(void);
 void UpdateLife(void);
 void DrawLife(void);
 
-void SetEnemy(D3DXVECTOR3 pos, D3DXCOLOR col,int fLife);
+void SetLife(D3DXVECTOR3 pos, D3DXCOLOR col);
+void HitLife(int nDamage);
+
 #endif
