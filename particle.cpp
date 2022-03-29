@@ -13,12 +13,17 @@
 static LPDIRECT3DTEXTURE9 s_pTextureParticle[NUR_PARTICLE] = {}; //テクスチャのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_pVtxBuffParticle = NULL; //頂点バッファの設定
 static Particle s_aParticle[MAX_PARTICLE];
-
+static bool Flg;
+static int timer;
+static D3DXVECTOR3 Log;
 //==================================
 //初期化
 //==================================
 void InitParticle(void)
 {
+
+	Flg = false;
+	timer = 0;
 	LPDIRECT3DDEVICE9  pDevice;
 	int nCntParticle;
 	
@@ -109,6 +114,20 @@ void UninitParticle(void)
 }
 void UpdateParticle(void)
 {
+
+	if (Flg)
+	{
+		timer++;
+
+		SetParticle(D3DXVECTOR3(Log.x, Log.y, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 50, 50, 0);
+
+		if (timer >= 30)
+		{
+			Flg = false;
+			timer = 0;
+		}
+	}
+
 	int nCntParticle;
 	VERTEX_2D*pVtx; //頂点へのポインタ
 					//頂点バッファをアンロック
@@ -199,8 +218,8 @@ void SetParticle(D3DXVECTOR3 pos, D3DXCOLOR col, float fRadeius, int nLife , int
 
 			s_aParticle[nCntParticle].move.x = sinf((float)(rand() % 629 - 314) / 100.0f);
 			s_aParticle[nCntParticle].move.y = sinf((float)(rand() % 629 - 314) / 100.0f + 100.0f);
-			
-
+			Log = pos;
+			Flg = true;
 			//頂点座標
 			SetNormalpos2d(pVtx, s_aParticle[nCntParticle].pos.x - fRadeius,
 				s_aParticle[nCntParticle].pos.x + fRadeius, 

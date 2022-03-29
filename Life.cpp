@@ -17,8 +17,7 @@ static Life s_Life[MAX_Life];
 static int LIFE;
 
 
-static bool Flg;
-static int timer;
+
 
 void InitLife(void)
 {
@@ -46,11 +45,9 @@ void InitLife(void)
 		s_Life[Cnt].pos  = D3DXVECTOR3 (0.0f, 0.0f, 0.0f);			//位置
 		s_Life[Cnt].col = D3DXCOLOR (0.0f, 0.0f, 0.0f,0.0f);
 
-		int nLife = 1;					//体力
-		bool bUse = false;					//使用してるかどうか
+		s_Life[Cnt].nLife = 1;					//体力
+		s_Life[Cnt].bUse = false;					//使用してるかどうか
 
-		Flg = false;
-		timer = 0;
 	}
 
 	VERTEX_2D*pVtx;
@@ -116,18 +113,7 @@ void UninitLife(void)
 void UpdateLife(void)
 {
 	Life *pLife = GetLife();
-	if (Flg)
-	{
-		timer++;
-
-		SetParticle(D3DXVECTOR3(pLife->pos.x, pLife->pos.y, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 50, 500, 0);
-
-		if (timer >= 30)
-		{
-			Flg = false;
-			timer = 0;
-		}
-	}
+	
 	for (int nCnt = 0; nCnt < MAX_Life; nCnt++)
 	{
 		if (s_Life[nCnt].bUse)
@@ -135,20 +121,20 @@ void UpdateLife(void)
 			for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 			{
 						Enemy *pEnemy = GetEnemy(nCntEnemy);
-						if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
-							&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
-							&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
-							&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
-						{//弾座標重なり
-							HitLife(1, nCnt);
-							pEnemy->bUse = false;
-
-							//サウンド開始
-							PlaySound(SOUND_LABEL_SE_EXPLOSION);
-
-							Flg = true;
+						if (pEnemy->bUse)
+						{
+							if (s_Life[nCnt].pos.x + 70 >= pEnemy->pos.x
+								&& s_Life[nCnt].pos.x - 70 <= pEnemy->pos.x
+								&& s_Life[nCnt].pos.y + 70 >= pEnemy->pos.y
+								&& s_Life[nCnt].pos.y - 70 <= pEnemy->pos.y)
+							{//弾座標重なり
+								HitLife(1, nCnt);
+								pEnemy->bUse = false;
+								SetParticle(D3DXVECTOR3(s_Life[nCnt].pos.x, s_Life[nCnt].pos.y, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 50, 50, 0);
+								//サウンド開始
+								PlaySound(SOUND_LABEL_SE_EXPLOSION);
+							}
 						}
-						
 						
 			}
 		}
