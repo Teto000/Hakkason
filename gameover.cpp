@@ -112,8 +112,7 @@ void UpdateGameOver(void)
 	//画面遷移
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
 	{
-
-		SetFade(MODE_GAME);
+		SetFade(MODE_TITLE);
 	}
 
 	//頂点バッファをアンロックする
