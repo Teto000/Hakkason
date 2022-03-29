@@ -74,7 +74,7 @@ void InitResult(void)
 	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 	//サウンドの再生
-	//PlaySound(SOUND_LABEL_BGM002);
+	PlaySound(SOUND_LABEL_BGM002);
 
 	//頂点バッファをアンロックする
 	s_pVtxBuff->Unlock();
@@ -87,7 +87,7 @@ void InitResult(void)
 void UninitResult(void)
 {
 	//サウンドの停止
-	//StopSound();
+	StopSound();
 
 
 	//頂点バッファの破壊

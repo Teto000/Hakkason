@@ -65,7 +65,7 @@ void InitGame(void)
 
 	InitEffect();
 	//サウンドの再生
-	//PlaySound(SOUND_LABEL_BGM000);
+	PlaySound(SOUND_LABEL_BGM000);
 }
 
 //========================
@@ -74,7 +74,7 @@ void InitGame(void)
 void UninitGame(void)
 {
 	//サウンドの停止
-	//StopSound();
+	StopSound();
 
 	//背景の終了処理
 	UninitBG();

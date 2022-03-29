@@ -4,7 +4,7 @@
 //====================
 #include "title.h"
 #include "input.h"
-//#include "sound.h"
+#include "sound.h"
 #include "fade.h"
 //#include "particle.h"
 
@@ -163,7 +163,7 @@ void InitTitle(void)
 	}
 
 	//サウンド開始
-	//PlaySound(SOUND_LABEL_BGM001);
+	PlaySound(SOUND_LABEL_BGM001);
 	//頂点バッファをアンロック
 	s_pVtxBuffTitle->Unlock();
 
@@ -176,7 +176,7 @@ void UninitTitle(void)
 
 
 	//サウンド停止
-	//StopSound();
+	StopSound();
 	int nCnt;
 	//テクスチャの破棄
 	for (nCnt = 0; nCnt < NUM_TITLE; nCnt++)

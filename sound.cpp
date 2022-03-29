@@ -33,9 +33,11 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 // 各音素材のパラメータ
 SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 {
-	{"data/BGM/bgm006.wav", -1},	// ゲーム中
-	{"Swift Charge!!.wav", -1},// タイトル
-	{"data/BGM/勝利のテーマ.wav", -1 },	// リザルト
+	{"data/BGM/Tricky Future.wav",-1},	// ゲーム中
+	{"data/BGM/Op.wav",-1},// タイトル
+	{"data/BGM/rizaruto.wav", -1 },	// リザルト
+	{"data/BGM/gameovera.wav", -1 },	// げーむまけ
+	{"data/BGM/bgm002.wav", -1 },	// げーむチュートリアル
 	{"data/SE/shot000.wav", 0},			// 弾発射音
 	{"data/SE/explosion000.wav",0},		// 爆発音
 	{"data/SE/system000.wav",0 },		// 決定音
