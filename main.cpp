@@ -240,7 +240,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	}
 
 	//サウンドの初期化処理
-	//InitSound(hWnd);
+	InitSound(hWnd);
 
 	//テクスチャの読み込み
 	LoadTexture();
@@ -270,7 +270,7 @@ void Uninit(void)
 	UninitResult();
 
 	//サウンドの終了処理
-	//UninitSound();
+	UninitSound();
 
 	//テクスチャの終了
 	UninitTexture();

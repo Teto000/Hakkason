@@ -3,6 +3,7 @@
 #include "Life.h"
 #include "enemy.h"
 #include"particle.h"
+#include "fade.h"
 
 #define KINDS (1)	//テクスチャ種類
 
@@ -12,6 +13,7 @@
 static LPDIRECT3DTEXTURE9 s_TextureLife[KINDS] = {};			//テクスチャへのポインタ
 static LPDIRECT3DVERTEXBUFFER9 s_PvtxBuffLife = NULL;				//頂点バッファへのポインタ
 static Life s_Life[MAX_Life];
+static int LIFE;
 
 
 static bool Flg;
@@ -19,6 +21,7 @@ static int timer;
 
 void InitLife(void)
 {
+	LIFE = 4;
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -140,9 +143,11 @@ void UpdateLife(void)
 
 							Flg = true;
 						}
-					
+						
+						
 			}
 		}
+
 	}
 }
 void DrawLife(void)
@@ -225,7 +230,11 @@ void HitLife(int nDamage,int number)
 		if (s_Life[number].nLife <= 0)					//---------------プレイヤーが死んだら---------------
 		{
 			s_Life[number].bUse = false;
-
+			LIFE--;
+			if (LIFE <= 0 )
+			{
+				//SetFade(MODE_GAMEOVEL);
+			}
 		}
 	
 

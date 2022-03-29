@@ -1,17 +1,18 @@
-#pragma once
-#pragma once
-#ifndef _GAMEOVER_H_
-#define _GAMEOVER_H_
+//=================================
+//
+// ゲームオーバー画面のヘッダー
+// Author:Teruto Sato
+//
+//=================================
+#ifndef _GAMEOVER_H_		//このマクロが定義されてなかったら
+#define _GAMEOVER_H_		//2重インクルード防止のマクロ定義
 
-#include"main.h"
-
-#define	MAX_GAMEOVER	(8)
-
-//プロトタイプ宣言
-void InitGameover(void);
-void UninitGameover(void);
-void UpdateGameover(void);
-void DrawGameover(void);
-
+//------------------------
+// プロトタイプ宣言
+//------------------------
+void InitGameOver(void);
+void UninitGameOver(void);
+void UpdateGameOver(void);
+void DrawGameOver(void);
 
 #endif

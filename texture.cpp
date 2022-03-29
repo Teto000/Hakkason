@@ -21,20 +21,21 @@ namespace
 const char *s_FileName[] =
 {// テクスチャのパス
 	//タイトル画面
-	"data\\TEXTURE\\TITLE\\Title_BG.png",		//タイトル画面の背景
-	"data\\TEXTURE\\TITLE\\Title_Logo.png",		//タイトルロゴ
+	"data\\TEXTURE\\TITLE\\Title_BG.png",		// タイトル画面の背景
+	"data\\TEXTURE\\TITLE\\Title_Logo.png",		// タイトルロゴ
 
 	//ゲーム画面
-	"data\\TEXTURE\\GAME\\Game_BG.png",			//ゲーム画面の背景
-	"data\\TEXTURE\\GAME\\Bom.png",				//爆弾
-	"data\\TEXTURE\\GAME\\BalloonBom.png",		//風船付き爆弾
-	"data\\TEXTURE\\GAME\\Flower.png",			//花
-	"data\\TEXTURE\\GAME\\Fox_UFO.png",			//UFO in きつね
-	"data\\TEXTURE\\GAME\\Light_Bright.png",	//明るい街灯
-	"data\\TEXTURE\\GAME\\Light_Dark.png",		//暗い街灯
+	"data\\TEXTURE\\GAME\\Game_BG.png",			// ゲーム画面の背景
+	"data\\TEXTURE\\GAME\\Bom.png",				// 爆弾
+	"data\\TEXTURE\\GAME\\BalloonBom.png",		// 風船付き爆弾
+	"data\\TEXTURE\\GAME\\Flower.png",			// 花
+	"data\\TEXTURE\\GAME\\Fox_UFO.png",			// UFO in きつね
+	"data\\TEXTURE\\GAME\\Light_Bright.png",	// 明るい街灯
+	"data\\TEXTURE\\GAME\\Light_Dark.png",		// 暗い街灯
 
 	//リザルト画面
-	"data\\TEXTURE\\RESULT\\Result_BG.png",		//リザルトの背景
+	"data\\TEXTURE\\RESULT\\Result_BG.png",		// リザルトの背景
+	"data\\TEXTURE\\RESULT\\GameOver.png",		// ゲームオーバー画面の背景
 
     /*↓ エフェクト ↓*/
     "data/TEXTURE/EFFECT/fire.png",				// 炎のエフェクト

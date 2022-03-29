@@ -78,7 +78,7 @@ void InitTimer(void)
 	//頂点バッファをアンロック
 	s_pVtxBuffTimer->Unlock();
 
-	SetTimer(30);			//30秒
+	SetTimer(90);			//30秒
 }
 
 //===================
@@ -207,7 +207,7 @@ void AddTimer(int nValue)
 
 		pVtx += 4; //頂点ポイントを四つ進む
 	}
-	if (s_nTimer == 0)
+	if (s_nTimer <= 0)
 	{
 		SetFade(MODE_RESULT);		//ゲーム画面に移行
 	}

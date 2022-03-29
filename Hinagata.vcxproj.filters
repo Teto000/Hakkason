@@ -21,6 +21,8 @@
     <ClCompile Include="combo.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="particle.cpp" />
+    <ClCompile Include="gameover.cpp" />
+    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ball.h" />
@@ -43,5 +45,7 @@
     <ClInclude Include="combo.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="gameover.h" />
+    <ClInclude Include="tutorial.h" />
   </ItemGroup>
 </Project>
