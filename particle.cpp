@@ -1,8 +1,10 @@
-//===================
-//パーティクル
-//  author hamadaryuuga
-//　author jyukia isoe
-//===================
+//**************************************************
+//
+// 制作 (パーティクル )
+// Author  : hamada ryuuga
+// Author  : jyukia isoe
+//**************************************************
+
 #include"particle.h"
 #include"effect.h"
 #include "Life.h"

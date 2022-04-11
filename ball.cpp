@@ -1,7 +1,7 @@
 //================================
 //
 // ã ÇÃê›íË
-// Author:Teruto Sato
+// Author:hamada ryuuga
 //
 //================================
 
@@ -152,7 +152,7 @@ void UpdateBall(void)
 	for (nCntBall = 0; nCntBall < MAX_BALL; nCntBall++)
 	{
 
-		if (g_aBall[nCntBall].bUse == true)
+		if (g_aBall[nCntBall].bUse)
 		{
 			
 		

@@ -1,5 +1,9 @@
-#pragma once
-#pragma once
+//**************************************************
+//
+// 制作 ( パーティクル )
+// Author  : hamada ryuuga
+//
+//**************************************************
 #ifndef _PARTICLE_H_
 #define _PARTICLE_H_
 
