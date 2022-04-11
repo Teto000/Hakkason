@@ -390,7 +390,8 @@ void UpdateRanking(void)
 		SetFade(MODE_TITLE);
 	}
 	if ((GetKeyboardTrigger(DIK_RETURN) == true ||
-		GetKeyboardTrigger(JOYKEY_START) == true) && pFade == FADE_NONE)
+		GetKeyboardTrigger(JOYKEY_START) == true ||
+		GetKeyboardTrigger(JOYKEY_A) == true) && pFade == FADE_NONE)
 	{//ƒGƒ“ƒ^[‚ğ‰Ÿ‚³‚ê‚½‚Æ‚«
 		//PlaySound(SOUND_LABEL_SE_KIRA);
 		SetFade(MODE_TITLE);

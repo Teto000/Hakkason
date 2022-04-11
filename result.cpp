@@ -106,7 +106,7 @@ void UpdateResult(void)
 
 	if (GetKeyboardTrigger(DIK_RETURN) == true || GetJoypadTrigger(JOYKEY_A))
 	{
-		SetFade(MODE_TITLE);
+		SetFade(MODE_RANKING);
 	}
 }
 

@@ -285,7 +285,7 @@ void UpdateTitle(void)
 			}
 
 			if ((GetKeyboardTrigger(DIK_RETURN) ||
-				GetKeyboardTrigger(JOYKEY_B)) && pFade == FADE_NONE)
+				GetKeyboardTrigger(JOYKEY_A)) && pFade == FADE_NONE)
 			{
 				//サウンド開始
 				PlaySound(SOUND_LABEL_SE_NEXT);
